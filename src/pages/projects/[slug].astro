@@ -3,7 +3,7 @@ import { marked } from 'marked';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 import { projects } from '../../data/projects';
 
-// Import all project markdown files at build time — no fs/path needed
+// Import all project markdown files at build time: no fs/path needed
 const mdFiles = import.meta.glob('../../data/projects/*.md', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 
 export async function getStaticPaths() {

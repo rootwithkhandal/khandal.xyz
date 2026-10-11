@@ -1,8 +1,13 @@
 ---
+import '../styles/tokens.css';
+import '../styles/dot-grid.css';
+import '../styles/global.css';
+import DotGrid from '../components/common/DotGrid.astro';
+
 interface Props {
-  title?:       string;
+  title?: string;
   description?: string;
-  canonical?:   string;
+  canonical?: string;
   extraSchema?: object | object[];
 }
 
@@ -11,9 +16,9 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const defaultCanonical = currentPath === '/' ? siteUrl : `${siteUrl}${currentPath}`;
 
 const {
-  title       = 'Priyansh Khandal · Cybersecurity Portfolio',
-  description = 'Priyansh Khandal - Cybersecurity student, SOC analyst, and penetration tester specialising in bug bounty, AI red-teaming, crypto investigations, and blockchain smart contract auditing.',
-  canonical   = defaultCanonical,
+  title = 'Priyansh Khandal · SOC Analyst & Security Researcher',
+  description = 'Priyansh Khandal: MCA graduate student and Certified SOC Analyst (CSA) specializing in SIEM telemetry, Sigma detection engineering, digital forensics, and blue team operations.',
+  canonical = defaultCanonical,
   extraSchema,
 } = Astro.props;
 
@@ -25,23 +30,24 @@ const personSchema = {
   "@id": `${siteUrl}/#person`,
   "name": "Priyansh Khandal",
   "url": siteUrl,
-  "email": "mailto:priyansh@khandal.tech",
+  "email": "mailto:khandakp04@gmail.com",
   "image": ogImage,
-  "jobTitle": "Cybersecurity Researcher & SOC Analyst",
+  "jobTitle": "SOC Analyst & Security Researcher",
   "description": description,
   "sameAs": [
     "https://github.com/rootwithkhandal",
-    "https://linkedin.com/in/priyansh-khandal",
+    "https://linkedin.com/in/priyanshkhandal",
     "https://tryhackme.com/p/rootwithkhandal"
   ],
   "knowsAbout": [
-    { "@type": "DefinedTerm", "name": "Cybersecurity", "sameAs": "https://en.wikipedia.org/wiki/Computer_security" },
-    { "@type": "DefinedTerm", "name": "SOC Analysis", "sameAs": "https://en.wikipedia.org/wiki/Security_operations_center" },
-    { "@type": "DefinedTerm", "name": "Penetration Testing", "sameAs": "https://en.wikipedia.org/wiki/Penetration_test" },
-    { "@type": "DefinedTerm", "name": "Bug Bounty", "sameAs": "https://en.wikipedia.org/wiki/Bug_bounty_program" },
-    { "@type": "DefinedTerm", "name": "Smart Contract Auditing", "sameAs": "https://en.wikipedia.org/wiki/Smart_contract" },
-    { "@type": "DefinedTerm", "name": "AI Red-Teaming" },
-    { "@type": "DefinedTerm", "name": "NixOS", "sameAs": "https://en.wikipedia.org/wiki/NixOS" }
+    { "@type": "DefinedTerm", "name": "SOC Analysis & Incident Triage" },
+    { "@type": "DefinedTerm", "name": "SIEM Telemetry & Splunk/Wazuh" },
+    { "@type": "DefinedTerm", "name": "Detection Engineering & Sigma Rules" },
+    { "@type": "DefinedTerm", "name": "Digital Forensics & Memory Analysis" },
+    { "@type": "DefinedTerm", "name": "Threat Hunting & MITRE ATT&CK" },
+    { "@type": "DefinedTerm", "name": "Blue Team Operations" },
+    { "@type": "DefinedTerm", "name": "SecOps Automation" },
+    { "@type": "DefinedTerm", "name": "Malware Triage & Reverse Engineering" }
   ]
 };
 
@@ -70,382 +76,68 @@ if (extraSchema) {
 
   <!-- Primary SEO -->
   <title>{title}</title>
-  <meta name="description"        content={description} />
-  <meta name="author"             content="Priyansh Khandal" />
-  <meta name="keywords"           content="Priyansh Khandal, cybersecurity, penetration testing, bug bounty, SOC analyst, blockchain audit, AI red-team, NixOS, portfolio, security researcher" />
-  <link rel="canonical"           href={canonical} />
+  <meta name="description" content={description} />
+  <meta name="author" content="Priyansh Khandal" />
+  <meta name="keywords" content="Priyansh Khandal, reverse engineering, malware analysis, cybersecurity, penetration testing, bug bounty, SOC analyst, smart contracts, AI red-team, NixOS" />
+  <link rel="canonical" href={canonical} />
 
   <!-- Open Graph -->
-  <meta property="og:type"        content="website" />
-  <meta property="og:url"         content={canonical} />
-  <meta property="og:title"       content={title} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image"       content={ogImage} />
-  <meta property="og:site_name"   content="Priyansh Khandal" />
-  <meta property="og:locale"      content="en_US" />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:site_name" content="Priyansh Khandal" />
+  <meta property="og:locale" content="en_US" />
 
-  <!-- Twitter / X Card -->
-  <meta name="twitter:card"        content="summary_large_image" />
-  <meta name="twitter:title"       content={title} />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
-  <meta name="twitter:image"       content={ogImage} />
+  <meta name="twitter:image" content={ogImage} />
 
   <!-- Structured data (JSON-LD) -->
   {schemas.map(s => (
     <script type="application/ld+json" set:html={JSON.stringify(s)} />
   ))}
 
-  <!-- Robots -->
+  <!-- Robots & Chrome Theme -->
   <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#121316" />
 
-  <!-- Theme colour (browser chrome) -->
-  <meta name="theme-color" content="#313841" />
-
-  <!-- Favicon -->
-  <link rel="icon"             href="/favicon.svg"          type="image/svg+xml" />
-  <link rel="icon"             href="/favicon.ico"          sizes="any" />
+  <!-- Favicon Suite -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
 
-  <!-- Fonts -->
+  <!-- Typography: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <!-- Custom cursor (pointer devices only) -->
-  <div class="cursor"      id="cursor"     aria-hidden="true"></div>
-  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
-
-  <!-- Ambient Orbs -->
-  <div class="ambient-orb orb-1" aria-hidden="true"></div>
-  <div class="ambient-orb orb-2" aria-hidden="true"></div>
+  <DotGrid />
   <slot />
+
+  <script>
+    // Universal scroll-triggered reveal
+    const revealEls = document.querySelectorAll<HTMLElement>('.reveal');
+    if ('IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+      );
+      revealEls.forEach((el) => revealObserver.observe(el));
+    } else {
+      revealEls.forEach((el) => el.classList.add('visible'));
+    }
+  </script>
 </body>
 </html>
-
-<script>
-  /* ── Global custom cursor (pointer devices only) ── */
-  const cursor = document.getElementById('cursor') as HTMLElement;
-  const ring   = document.getElementById('cursorRing') as HTMLElement;
-  const hasPointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-  if (hasPointer && cursor && ring) {
-    let mx = -200, my = -200;
-    let rx = -200, ry = -200;
-
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.left = mx + 'px';
-      cursor.style.top  = my + 'px';
-    });
-
-    (function animRing() {
-      rx += (mx - rx) * 0.11;
-      ry += (my - ry) * 0.11;
-      ring.style.left = rx + 'px';
-      ring.style.top  = ry + 'px';
-      requestAnimationFrame(animRing);
-    })();
-
-    document.addEventListener('mouseover', e => {
-      const target = (e.target as HTMLElement)?.closest?.('a, button, [role="button"], input, select, textarea');
-      if (target) {
-        cursor.style.width   = '5px';
-        cursor.style.height  = '5px';
-        cursor.style.opacity = '0.5';
-        ring.style.width     = '52px';
-        ring.style.height    = '52px';
-        ring.style.borderColor = 'rgba(234,146,22,0.8)';
-      }
-    });
-
-    document.addEventListener('mouseout', e => {
-      const target = (e.target as HTMLElement)?.closest?.('a, button, [role="button"], input, select, textarea');
-      if (target) {
-        cursor.style.width   = '10px';
-        cursor.style.height  = '10px';
-        cursor.style.opacity = '1';
-        ring.style.width     = '36px';
-        ring.style.height    = '36px';
-        ring.style.borderColor = 'rgba(234,146,22,0.55)';
-      }
-    });
-
-    document.addEventListener('mousedown', () => {
-      cursor.style.transform = 'translate(-50%,-50%) scale(0.7)';
-      ring.style.transform   = 'translate(-50%,-50%) scale(0.85)';
-    });
-    document.addEventListener('mouseup', () => {
-      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
-      ring.style.transform   = 'translate(-50%,-50%) scale(1)';
-    });
-  }
-</script>
-
-<style is:global>
-  /* ── Reset ── */
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  /* ── Design tokens ── */
-  :root {
-    /* ── Surface palette (dark-slate) ── */
-    --bg:      #313841;          /* secondary – base dark canvas */
-    --bg2:     #3a4750;          /* primary   – raised dark surface */
-    --bg3:     #1f242a;          /* ink       – deepest surface */
-
-    /* ── Accent (amber) ── */
-    --accent:       #ea9216;
-    --accent-rgb:   234, 146, 22;
-    --accent-hover: #c97a0a;     /* pressed */
-    --accent-deep:  #8f4d00;     /* text-safe on light bg */
-    --accent-wash:  #373128;     /* tinted surface hint */
-
-    /* ── Text ── */
-    --text:    #eeeeee;          /* tertiary – readable text on dark */
-    --muted:   #b3bdc5;          /* on-dark-muted */
-    --steel:   #56636d;          /* secondary text / captions */
-
-    /* ── Borders ── */
-    --border:       rgba(79, 93, 104, 0.5);  /* hairline-dark softened */
-    --hairline-dark:#4f5d68;
-
-    /* ── Status hues ── */
-    --status-success: #5fc08f;
-    --status-danger:  #f26d6f;
-    --status-info:    #6cabe6;
-
-    /* ── Sizing ── */
-    --nav-h:   64px;
-
-    /* ── Font roles (IBM Plex family) ── */
-    --font-display: 'IBM Plex Sans Condensed', 'Arial Narrow', sans-serif;
-    --font-label:   'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-body:    'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-mono:    'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, monospace;
-  }
-
-  html {
-    scroll-behavior: smooth;
-    font-size: 110%;   /* +10% base - all rem/em values scale automatically */
-  }
-
-  body {
-    background: var(--bg);
-    background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 24px 24px;
-    color: var(--text);
-    font-family: var(--font-body);
-    overflow-x: hidden;
-  }
-
-  /* ── Ambient Orbs ── */
-  .ambient-orb {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.12;
-    pointer-events: none;
-    z-index: -1;
-  }
-  .orb-1 {
-    top: -150px; left: -100px;
-    width: 450px; height: 450px;
-    background: var(--accent);
-  }
-  .orb-2 {
-    bottom: -200px; right: -150px;
-    width: 600px; height: 600px;
-    background: #3a4750;
-  }
-
-  /* ── Custom cursor (pointer devices only) ── */
-  .cursor {
-    position: fixed;
-    width: 10px; height: 10px;
-    background: var(--accent);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    left: -100px; top: -100px;   /* off-screen until first mousemove */
-    transform: translate(-50%, -50%);
-    transition: width 0.18s, height 0.18s, opacity 0.18s, background 0.18s;
-    mix-blend-mode: screen;
-    will-change: left, top;
-  }
-  .cursor-ring {
-    position: fixed;
-    width: 36px; height: 36px;
-    border: 1.5px solid rgba(234,146,22,0.55);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    left: -100px; top: -100px;
-    transform: translate(-50%, -50%);
-    transition: width 0.22s, height 0.22s, border-color 0.22s;
-    will-change: left, top;
-  }
-  /* hide default cursor only on devices with a fine pointer (mouse/trackpad) */
-  @media (hover: hover) and (pointer: fine) {
-    body, a, button, [role="button"] {
-      cursor: none;
-    }
-  }
-
-  /* hide custom cursor elements on touch/coarse devices */
-  @media (hover: none), (pointer: coarse) {
-    .cursor, .cursor-ring {
-      display: none !important;
-    }
-    body, a, button, [role="button"] {
-      cursor: auto !important;
-    }
-  }
-
-  /* ── Shared section shell ── */
-  .section-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 clamp(1rem, 5vw, 3rem);
-  }
-
-  /* ── Section labels & titles ── */
-  .section-label {
-    font-family: var(--font-label);
-    font-size: clamp(0.6rem, 1.5vw, 0.7rem);
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .section-label::before {
-    content: '';
-    display: block;
-    width: 30px; height: 1px;
-    background: var(--accent);
-    flex-shrink: 0;
-  }
-
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 4.5rem);
-    letter-spacing: 0.03em;
-    line-height: 1;
-    margin-bottom: 3rem;
-  }
-
-  /* ── Scroll-triggered fade-up ── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1),
-                transform 0.75s cubic-bezier(0.16,1,0.3,1);
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  /* stagger delays */
-  .reveal.d1 { transition-delay: 0.05s; }
-  .reveal.d2 { transition-delay: 0.15s; }
-  .reveal.d3 { transition-delay: 0.25s; }
-  .reveal.d4 { transition-delay: 0.35s; }
-  .reveal.d5 { transition-delay: 0.45s; }
-  .reveal.d6 { transition-delay: 0.55s; }
-  .reveal.d7 { transition-delay: 0.65s; }
-  .reveal.d8 { transition-delay: 0.75s; }
-
-  /* hero items animate immediately on load (no JS needed) */
-  .fade-up {
-    opacity: 0;
-    animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) forwards;
-  }
-  .fade-up.d1 { animation-delay: 0.1s; }
-  .fade-up.d2 { animation-delay: 0.25s; }
-  .fade-up.d3 { animation-delay: 0.4s; }
-  .fade-up.d4 { animation-delay: 0.55s; }
-  .fade-up.d5 { animation-delay: 0.7s; }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── Shared keyframes ── */
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: 0.4; transform: scale(1.4); }
-  }
-  @keyframes scan {
-    0%   { top: 0; }
-    100% { top: 100%; }
-  }
-
-  /* ── Responsive breakpoints ──
-     smartwatch  : ≤ 200px
-     xs phone    : 201-359px
-     phone       : 360-599px
-     tablet      : 600-899px
-     ipad        : 900-1023px
-     laptop      : 1024-1279px
-     desktop     : 1280-1535px
-     wide        : ≥ 1536px
-  ── */
-
-  /* Tablet & below: single-column grids */
-  @media (max-width: 899px) {
-    .hero-grid    { grid-template-columns: 1fr !important; }
-    .profile-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
-    .contact-grid { grid-template-columns: 1fr !important; }
-    .hero-right   { display: none !important; }
-    .profile-meta { grid-template-columns: 1fr !important; }
-    .profile-meta .meta-block[style] { grid-column: span 1 !important; }
-  }
-
-  /* Project grid: 2-col on tablet */
-  @media (max-width: 899px) {
-    .project-grid {
-      grid-template-columns: repeat(2, 1fr) !important;
-      grid-template-rows: repeat(4, 160px) !important;
-    }
-    .project-card.span-h { grid-column: span 1 !important; }
-    .project-card.span-v { grid-row: span 1 !important; }
-  }
-
-  /* Phone: 1-col project grid */
-  @media (max-width: 599px) {
-    .project-grid {
-      grid-template-columns: 1fr !important;
-      grid-template-rows: auto !important;
-    }
-    .project-card { min-height: 140px; }
-  }
-
-  /* Smartwatch / tiny screens */
-  @media (max-width: 200px) {
-    :root { --nav-h: 44px; }
-    nav { padding: 0 0.5rem !important; }
-    .nav-links { display: none !important; }
-    .section-inner { padding: 0 0.5rem !important; }
-    #hero, #profile, #projects, #contact { padding: 3rem 0 !important; }
-    footer { flex-direction: column; gap: 0.5rem; padding: 1rem 0.5rem !important; }
-    .contact-right { display: none !important; }
-  }
-
-  /* XS phone */
-  @media (max-width: 359px) {
-    .hero-name { font-size: clamp(2.8rem, 14vw, 4rem) !important; }
-    .contact-title { font-size: clamp(2.2rem, 12vw, 3.5rem) !important; }
-    .profile-info h2 { font-size: 2rem !important; }
-    .skills-icons { gap: 6px !important; }
-    .skill-pill { padding: 5px 10px !important; font-size: 0.72rem !important; }
-  }
-
-  /* Wide desktop */
-  @media (min-width: 1536px) {
-    .section-inner { max-width: 1400px; }
-    .hero-grid { max-width: 1400px !important; }
-  }
-</style>

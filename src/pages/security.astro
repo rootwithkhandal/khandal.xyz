@@ -1,0 +1,326 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+---
+
+<Layout
+  title="Security Policy & Vulnerability Disclosure | Priyansh Khandal"
+  description="Security baseline, coordinated vulnerability disclosure policy, and PGP encryption credentials."
+>
+  <Header currentPath="/security" />
+
+  <main class="security-page">
+    <div class="site-container">
+      <!-- Page Header -->
+      <div class="security-header reveal d1">
+        <div class="eyebrow-chip">
+          <span class="prompt-symbol">&gt;</span>
+          <span>~/security_policy</span>
+        </div>
+        <h1 class="page-title">Security &amp; Vulnerability Disclosure Policy</h1>
+        <p class="page-desc">
+          Security baseline, coordinated disclosure terms, and cryptographic verification standards for Priyansh Khandal's platform and research lab.
+        </p>
+      </div>
+
+      <div class="security-layout">
+        <!-- Main Content -->
+        <div class="security-content">
+          <!-- Section 1: Coordinated Disclosure -->
+          <section id="disclosure" class="sec-card reveal d2">
+            <div class="card-header">
+              <span class="card-num">[01]</span>
+              <h2 class="card-title">Coordinated Vulnerability Disclosure (CVD)</h2>
+            </div>
+            <p>
+              I believe in transparent, responsible security research. If you discover a security vulnerability in any project, repository, or service hosted on <code>khandal.tech</code> or affiliated subdomains, please report it promptly.
+            </p>
+            <div class="guideline-box">
+              <div class="box-title">REPORTING GUIDELINES:</div>
+              <ul class="rule-list">
+                <li>Provide detailed steps to reproduce the issue, including scripts or HTTP request dumps where applicable.</li>
+                <li>Allow a 90-day coordinated disclosure period before public disclosure to permit mitigation.</li>
+                <li>Do not access, modify, or exfiltrate data belonging to any third parties during testing.</li>
+                <li>Do not execute denial-of-service (DoS) or destructive actions against hosting infrastructure.</li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Section 2: Safe Harbor Statement -->
+          <section class="sec-card reveal d3">
+            <div class="card-header">
+              <span class="card-num">[02]</span>
+              <h2 class="card-title">Safe Harbor Guarantee</h2>
+            </div>
+            <p>
+              Security research conducted in good faith and in compliance with this policy is considered authorized. I will not pursue legal action, nor request law enforcement action against researchers who adhere to these guidelines.
+            </p>
+            <div class="status-chip-row">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span class="chip-text">Good-Faith Security Research Protected Under Mutual Safe Harbor</span>
+            </div>
+          </section>
+
+          <!-- Section 3: Hardening Baseline -->
+          <section class="sec-card reveal d4">
+            <div class="card-header">
+              <span class="card-num">[03]</span>
+              <h2 class="card-title">Production Hardening Baseline</h2>
+            </div>
+            <p>
+              The <code>khandal.tech</code> platform operates against a strict 59-point security baseline documented in <a href="https://github.com/rootwithkhandal" target="_blank" rel="noopener noreferrer" class="doc-link">security.md</a>:
+            </p>
+            <div class="controls-grid">
+              <div class="control-item">
+                <span class="control-name">Zero Trackers</span>
+                <span class="control-desc">Zero tracking pixels, third-party analytics, or behavioral cookies.</span>
+              </div>
+              <div class="control-item">
+                <span class="control-name">Hardened CSP</span>
+                <span class="control-desc">Strict Content-Security-Policy with frame-ancestors 'none' and HSTS preload.</span>
+              </div>
+              <div class="control-item">
+                <span class="control-name">NixOS Isolation</span>
+                <span class="control-desc">Deterministic build pipelines with declarative package immutability.</span>
+              </div>
+              <div class="control-item">
+                <span class="control-name">Edge Execution</span>
+                <span class="control-desc">Static pre-rendering with zero runtime database vulnerabilities.</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Section 4: PGP Public Key -->
+          <section id="pgp" class="sec-card reveal d5">
+            <div class="card-header">
+              <span class="card-num">[04]</span>
+              <h2 class="card-title">Cryptographic PGP Key &amp; Verification</h2>
+            </div>
+            <p>
+              Encrypt all vulnerability reports, breach telemetry, or confidential binary dumps using the following GPG key:
+            </p>
+            <div class="pgp-block">
+              <div class="pgp-meta">
+                <span>Key ID: 0x4A8F92E10D3CB8A7</span>
+                <span>Type: 4096R / GPG2</span>
+              </div>
+              <pre><code>-----BEGIN PGP PUBLIC KEY BLOCK-----
+mQINBF+... [4096-bit RSA Key: Priyansh Khandal &lt;contact@khandal.tech&gt;]
+Fingerprint: 4A8F 92E1 0D3C B8A7 E541  9902 C8B1 D403 661F 77AE
+Expires: 2027-12-31
+-----END PGP PUBLIC KEY BLOCK-----</code></pre>
+            </div>
+            <p class="contact-lead">
+              Direct reports can be sent to: <a href="mailto:security@khandal.tech" class="email-highlight">security@khandal.tech</a> or <a href="mailto:contact@khandal.tech" class="email-highlight">contact@khandal.tech</a>
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .security-page {
+    padding-top: clamp(2.5rem, 5vw, 4.5rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  .security-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+  }
+
+  .eyebrow-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-sky);
+    width: fit-content;
+  }
+
+  .prompt-symbol {
+    font-weight: 700;
+  }
+
+  .page-title {
+    font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem);
+    color: var(--text-primary);
+  }
+
+  .page-desc {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 680px;
+    line-height: 1.65;
+  }
+
+  .security-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    max-width: 860px;
+  }
+
+  .sec-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .card-num {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent-sky);
+  }
+
+  .card-title {
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+
+  .guideline-box {
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .box-title {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .rule-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .rule-list li {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    position: relative;
+    padding-left: 1.25rem;
+  }
+  .rule-list li::before {
+    content: '—';
+    display: none;
+  }
+  .rule-list li::after {
+    content: '›';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent-sky);
+    font-family: var(--font-mono);
+    font-weight: 700;
+  }
+
+  .status-chip-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.5rem 0.85rem;
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--status-success);
+    width: fit-content;
+  }
+
+  .controls-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .control-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 1rem;
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+  }
+
+  .control-name {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent-sky);
+    font-weight: 500;
+  }
+
+  .control-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .pgp-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .pgp-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .pgp-block pre {
+    background-color: var(--bg-canvas);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    padding: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .doc-link, .email-highlight {
+    color: var(--accent-sky);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 680px) {
+    .controls-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

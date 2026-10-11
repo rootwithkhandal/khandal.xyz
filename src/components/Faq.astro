@@ -2,19 +2,19 @@
 export const faqs = [
   {
     question: "Who is Priyansh Khandal?",
-    answer: "Priyansh Khandal is a cybersecurity researcher, SOC analyst, and penetration tester specializing in bug bounty hunting, AI red-teaming, crypto investigations, and blockchain smart contract auditing."
+    answer: "Priyansh Khandal is an MCA graduate student and Certified SOC Analyst (CSA) specializing in blue team defense, SIEM telemetry correlation, Sigma rule authoring, and digital forensics."
   },
   {
-    question: "What security services and research areas does Priyansh specialize in?",
-    answer: "Priyansh specializes in SOC Alert Triage, Vulnerability Assessment & Bug Bounties, AI Red-Teaming (using tools like Garak and PyRIT), Smart Contract Auditing (EVM reentrancy, flash loan attacks), and Declarative Security Environments with NixOS."
+    question: "What roles is Priyansh actively targeting?",
+    answer: "Entry-level to junior SOC Analyst (L1/L2), Detection Engineer Intern/Associate, and Junior Incident Responder roles across 24/7 rotational shifts — remote, hybrid, or on-site."
   },
   {
-    question: "How can I contact Priyansh Khandal for security inquiries or audits?",
-    answer: "You can reach Priyansh directly via email at priyansh@khandal.tech or connect on LinkedIn and GitHub (@rootwithkhandal)."
+    question: "What hands-on lab experience does Priyansh bring?",
+    answer: "A virtualized enterprise SOC home lab with Splunk Enterprise, Wazuh EDR, and Sysmon log pipelines. Active investigations on TryHackMe and Hack The Box, plus custom Sigma and YARA rules targeting adversary persistence and privilege escalation."
   },
   {
-    question: "Where can I find Priyansh's security research writeups and code repositories?",
-    answer: "Detailed technical writeups are published on the Researches page (/researches), and open-source tools/projects are hosted on the Projects page (/projects) and GitHub."
+    question: "Where can SOC labs and detection rules be reviewed?",
+    answer: "SOC labs and detection tools are published under Projects (/projects), technical writeups are under Researches (/researches), and open-source detection rules are available on GitHub (github.com/rootwithkhandal)."
   }
 ];
 
@@ -32,100 +32,156 @@ export const faqSchema = {
 };
 ---
 
-<section id="faq" class="section-inner reveal">
-  <div class="section-label">FAQ & Knowledge Base</div>
-  <h2 class="section-title">FREQUENTLY ASKED QUESTIONS</h2>
-
-  <div class="faq-list">
-    {faqs.map((faq, index) => (
-      <details class="faq-item" open={index === 0}>
-        <summary class="faq-question">
-          <span>{faq.question}</span>
-          <svg class="faq-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </summary>
-        <div class="faq-answer">
-          <p>{faq.answer}</p>
+<section id="faq" class="faq-section">
+  <div class="site-container">
+    <div class="faq-layout">
+      <!-- Left: Header -->
+      <div class="faq-header reveal d1">
+        <div class="eyebrow-chip">
+          <span class="prompt-symbol">&gt;</span>
+          <span>~/faq</span>
         </div>
-      </details>
-    ))}
+        <h2 class="section-title">Frequently Asked</h2>
+        <p class="section-sub">
+          Background, competencies, and availability for hiring managers and recruiters.
+        </p>
+      </div>
+
+      <!-- Right: Accordion -->
+      <div class="faq-list">
+        {faqs.map((faq, index) => (
+          <details class="faq-item reveal d2" open={index === 0}>
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <span class="faq-marker" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-answer">
+              <p>{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
   </div>
 </section>
 
 <style>
-  #faq {
-    padding: clamp(3rem, 6vw, 6rem) 0;
+  .faq-section {
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .faq-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  .faq-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    position: sticky;
+    top: calc(var(--nav-h) + 1.5rem);
+  }
+
+  .eyebrow-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-sky);
+    width: fit-content;
+  }
+
+  .prompt-symbol {
+    font-weight: 700;
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.1rem);
+    color: var(--text-primary);
+  }
+
+  .section-sub {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    max-width: 320px;
+    line-height: 1.55;
   }
 
   .faq-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    max-width: 850px;
+    gap: 0.5rem;
   }
 
   .faq-item {
-    background: var(--bg2);
-    border: 0.5px solid rgba(255,255,255,0.07);
-    border-radius: 8px;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
     overflow: hidden;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
   }
-
   .faq-item[open] {
-    border-color: rgba(234,146,22,0.3);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    border-color: var(--border-active);
   }
 
   .faq-question {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.2rem 1.5rem;
-    font-family: var(--font-display);
-    font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+    padding: 0.9rem 1.1rem;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
     font-weight: 500;
-    color: var(--text);
+    color: var(--text-primary);
     cursor: pointer;
     list-style: none;
     user-select: none;
+    min-height: var(--touch-target-min);
   }
-
   .faq-question::-webkit-details-marker {
     display: none;
   }
-
   .faq-question:hover {
-    color: var(--accent);
+    color: var(--accent-sky);
+    background-color: var(--bg-hover);
   }
 
-  .faq-icon {
-    width: 16px;
-    height: 16px;
-    color: var(--muted);
-    transition: transform 0.3s, color 0.3s;
+  .faq-marker {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--text-muted);
+    transition: transform var(--transition-fast), color var(--transition-fast);
     flex-shrink: 0;
+    margin-left: 1rem;
   }
 
-  .faq-item[open] .faq-icon {
-    transform: rotate(180deg);
-    color: var(--accent);
+  .faq-item[open] .faq-marker {
+    transform: rotate(45deg);
+    color: var(--accent-sky);
   }
 
   .faq-answer {
-    padding: 0 1.5rem 1.25rem 1.5rem;
-    font-family: var(--font-body);
-    font-size: clamp(0.82rem, 1.4vw, 0.92rem);
-    color: var(--muted);
-    line-height: 1.7;
-    border-top: 0.5px solid rgba(255,255,255,0.05);
-    margin-top: 0.25rem;
-    padding-top: 1rem;
+    padding: 0 1.1rem 1.1rem 1.1rem;
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 0.75rem;
   }
 
-  @media (max-width: 599px) {
-    .faq-question { padding: 1rem; }
-    .faq-answer { padding: 0.75rem 1rem 1rem 1rem; }
+  @media (max-width: 768px) {
+    .faq-layout {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .faq-header {
+      position: static;
+    }
   }
 </style>

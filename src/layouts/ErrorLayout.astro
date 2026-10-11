@@ -1,266 +1,175 @@
 ---
+import '../styles/tokens.css';
+import '../styles/dot-grid.css';
+import '../styles/global.css';
+import DotGrid from '../components/common/DotGrid.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+
 interface Props {
   code: number;
   title: string;
   message: string;
   hint: string;
 }
-const { code, title, message, hint } = Astro.props;
 
-const currentYear = new Date().getFullYear();
+const { code, title, message, hint } = Astro.props;
 ---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{code} - {title} · Priyansh Khandal</title>
+  <title>{code} · {title} | Priyansh Khandal</title>
   <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
+  <DotGrid />
+  <Header />
 
-  <!-- scanline overlay -->
-  <div class="scanlines" aria-hidden="true"></div>
+  <main class="error-main">
+    <div class="site-container">
+      <div class="error-diagnostic-panel">
+        <div class="panel-header">
+          <div class="diagnostic-tag">
+            <span class="status-dot" style="background:var(--status-error);" aria-hidden="true"></span>
+            <span>SYSTEM_EXCEPTION :: STATUS_{code}</span>
+          </div>
+          <span class="exit-code">EXIT CODE {code}</span>
+        </div>
 
-  <main>
-    <!-- glitch code -->
-    <div class="error-code" aria-hidden="true">{code}</div>
+        <div class="panel-body">
+          <div class="code-banner">{code}</div>
+          <h1 class="error-heading">{title}</h1>
+          <p class="error-message">{message}</p>
+          <div class="error-hint-box">
+            <span class="hint-prefix">&gt; DIAGNOSTIC:</span>
+            <span class="hint-text">{hint}</span>
+          </div>
 
-    <div class="content">
-      <div class="tag">
-        <span class="dot"></span>
-        SYSTEM ERROR · {code}
+          <div class="error-actions">
+            <a href="/" class="btn-primary">
+              [ ↵ Return to Terminal ]
+            </a>
+            <a href="/projects" class="btn-secondary">
+              Inspect Projects
+            </a>
+            <a href="/researches" class="btn-ghost">
+              Read Researches
+            </a>
+          </div>
+        </div>
       </div>
-
-      <h1 class="title">{title}</h1>
-      <p class="message">{message}</p>
-      <p class="hint">{hint}</p>
-
-      <div class="actions">
-        <a href="/" class="btn-primary">← Return Home</a>
-        <a href="/#projects" class="btn-ghost">Projects</a>
-        <a href="/#contact" class="btn-ghost">Contact</a>
-      </div>
-
-
     </div>
   </main>
 
-    <footer>
-    <div class="footer-left">
-      <a href="/" class="logo" style="text-decoration:none; color:inherit;">0x</a>
-      <span style="opacity:0.8;">Priyansh Khandal</span>
-    </div>
-    <div class="footer-legal" style="display:flex; gap:1rem; opacity:0.8;">
-      <a href="/privacy" style="color:inherit; text-decoration:none;">Privacy</a>
-      <a href="/tos" style="color:inherit; text-decoration:none;">Terms</a>
-      <a href="/cookie-policy" style="color:inherit; text-decoration:none;">Cookies</a>
-    </div>
-    <span class="dim" style="opacity:0.5;">{currentYear}</span>
-  </footer>
-
+  <Footer />
 </body>
 </html>
 
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --bg:     #313841;
-    --accent: #ea9216;
-    --accent-rgb: 234, 146, 22;
-    --accent-hover: #c97a0a;
-    --red:    #f26d6f;
-    --text:   #eeeeee;
-    --muted:  #b3bdc5;
-    --border: rgba(79, 93, 104, 0.5);
-    --font-display: 'IBM Plex Sans Condensed', 'Arial Narrow', sans-serif;
-    --font-label:   'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-body:    'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-mono:    'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, monospace;
-  }
-
-  html { font-size: 110%; scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
-  }
-
-  /* CRT scanlines */
-  .scanlines {
-    position: fixed; inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0,0,0,0.03) 2px,
-      rgba(0,0,0,0.03) 4px
-    );
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  main {
-    flex: 1;
+  .error-main {
+    min-height: 70vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: clamp(2rem, 8vw, 5rem) clamp(1rem, 5vw, 3rem);
-    position: relative;
+    padding: clamp(2rem, 5vw, 4rem) 0;
+  }
+
+  .error-diagnostic-panel {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    max-width: 680px;
+    margin: 0 auto;
     overflow: hidden;
   }
 
-  /* Giant background code number */
-  .error-code {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: var(--font-display);
-    font-size: clamp(12rem, 35vw, 32rem);
-    color: rgba(234,146,22,0.03);
-    letter-spacing: -0.02em;
-    pointer-events: none;
-    user-select: none;
-    white-space: nowrap;
-    animation: glitch 6s infinite;
+  .panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--bg-elevated);
+    border-bottom: 1px solid var(--border-subtle);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
   }
 
-  @keyframes glitch {
-    0%, 90%, 100% { transform: translate(-50%, -50%); opacity: 1; }
-    91%  { transform: translate(-50%, -50%) translate(-4px, 0); opacity: 0.8; }
-    92%  { transform: translate(-50%, -50%) translate(4px, 0);  opacity: 0.8; }
-    93%  { transform: translate(-50%, -50%); opacity: 1; }
-  }
-
-  .content {
-    position: relative;
-    z-index: 1;
-    max-width: 600px;
-    width: 100%;
-  }
-
-  /* Tag */
-  .tag {
-    display: inline-flex;
+  .diagnostic-tag {
+    display: flex;
     align-items: center;
     gap: 8px;
-    font-family: var(--font-label);
-    font-size: 0.7rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 1.5rem;
-  }
-  .dot {
-    width: 6px; height: 6px;
-    background: var(--red);
-    border-radius: 50%;
-    animation: pulse 1.5s infinite;
-    flex-shrink: 0;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: 0.4; transform: scale(1.5); }
+    color: var(--status-error);
   }
 
-  /* Title */
-  .title {
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 7vw, 5rem);
-    letter-spacing: 0.03em;
-    line-height: 1;
-    margin-bottom: 1rem;
-    color: var(--text);
+  .exit-code {
+    color: var(--text-muted);
   }
 
-  .message {
-    font-family: var(--font-body);
-    font-size: clamp(0.85rem, 1.5vw, 0.95rem);
-    color: var(--muted);
-    line-height: 1.75;
-    margin-bottom: 0.5rem;
-  }
-
-  .hint {
-    font-family: var(--font-label);
-    font-size: 0.72rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(234,146,22,0.5);
-    margin-bottom: 2.5rem;
-  }
-
-  /* Actions */
-  .actions {
+  .panel-body {
+    padding: 2.5rem clamp(1.5rem, 5vw, 2.5rem);
     display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    text-align: center;
+    align-items: center;
+  }
+
+  .code-banner {
+    font-family: var(--font-mono);
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 700;
+    color: var(--status-error);
+    line-height: 1;
+    opacity: 0.9;
+  }
+
+  .error-heading {
+    font-size: clamp(1.4rem, 1.1rem + 1vw, 1.85rem);
+    color: var(--text-primary);
+  }
+
+  .error-message {
+    font-size: 0.925rem;
+    color: var(--text-secondary);
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  .error-hint-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.65rem 1rem;
+    background-color: var(--bg-canvas);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    font-family: var(--font-mono);
+    font-size: 0.775rem;
+    max-width: 100%;
+  }
+
+  .hint-prefix {
+    color: var(--accent-sky);
+  }
+
+  .hint-text {
+    color: var(--text-muted);
+  }
+
+  .error-actions {
+    display: flex;
+    align-items: center;
     gap: 0.75rem;
     flex-wrap: wrap;
-    margin-bottom: 2.5rem;
-  }
-
-  .btn-primary {
-    font-family: var(--font-label);
-    font-size: 0.72rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--bg);
-    background: var(--accent);
-    text-decoration: none;
-    padding: 8px 20px;
-    border-radius: 4px;
-    transition: opacity 0.2s, transform 0.2s;
-  }
-  .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
-
-  .btn-ghost {
-    font-family: var(--font-label);
-    font-size: 0.72rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    text-decoration: none;
-    padding: 8px 20px;
-    border: 1px solid rgba(234,146,22,0.3);
-    border-radius: 4px;
-    background: rgba(234,146,22,0.05);
-    transition: background 0.2s, border-color 0.2s;
-  }
-  .btn-ghost:hover { background: rgba(234,146,22,0.12); border-color: rgba(234,146,22,0.6); }
-
-
-  /* Footer */
-  footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.25rem clamp(1rem, 5vw, 3rem);
-    border-top: 0.5px solid var(--border);
-    font-family: var(--font-label);
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .logo {
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    letter-spacing: 0.08em;
-    color: rgba(234,146,22,0.4);
-    text-decoration: none;
-  }
-
-  @media (max-width: 480px) {
-    .actions { flex-direction: column; }
-    .btn-primary, .btn-ghost { text-align: center; }
+    justify-content: center;
+    margin-top: 0.5rem;
   }
 </style>

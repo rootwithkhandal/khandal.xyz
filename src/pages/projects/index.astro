@@ -1,366 +1,291 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Nav from '../../components/Nav.astro';
+import Header from '../../components/common/Header.astro';
+import Footer from '../../components/common/Footer.astro';
 import { projects } from '../../data/projects';
 
-const tagColors: Record<string, string> = {
-  'Bug Bounty':    '#ea9216',
-  'AI Red-Team':   '#f26d6f',
-  'Blockchain':    '#5fc08f',
-  'SOC':           '#6cabe6',
-  'OPSEC':         '#b3bdc5',
-  'Multi-Model':   '#b3bdc5',
-  'Nix / DevOps':  '#6cabe6',
-  'Analytics':     '#b3bdc5',
-};
-
 const tags = ['All', ...new Set(projects.map(p => p.tag))];
-const currentYear = new Date().getFullYear();
 ---
 
-<Layout title="Projects | Priyansh Khandal" description="Explore my active security research projects, including bug bounties, AI red-teaming scripts, and blockchain audit tools.">
-  <Nav />
-  <main>
-    <!-- Page header -->
-    <div class="page-header">
-      <div class="page-label">
-        <span class="dot"></span>
-        Research &amp; Projects
+<Layout
+  title="Projects & Research Systems | Priyansh Khandal"
+  description="Explore active security research operations, binary tools, AI red-teaming harnesses, and smart contract auditing suites."
+>
+  <Header currentPath="/projects" />
+
+  <main class="projects-page">
+    <div class="site-container">
+      <!-- Page Header -->
+      <div class="page-header reveal d1">
+        <div class="eyebrow-chip">
+          <span class="prompt-symbol">&gt;</span>
+          <span>~/projects_directory</span>
+        </div>
+        <h1 class="page-title">Active Security Operations</h1>
+        <p class="page-sub">
+          {projects.length} reproducible research projects across binary reverse engineering, blockchain auditing, AI safety, and OPSEC environments.
+        </p>
       </div>
-      <h1 class="page-title">Active Operations</h1>
-      <p class="page-sub">{projects.length} projects across offensive security, blockchain auditing, AI red-teaming, and OPSEC.</p>
-    </div>
 
-    <!-- Filter tabs -->
-    <div class="filters" id="filters">
-      {tags.map(tag => (
-        <button class={`filter-btn ${tag === 'All' ? 'active' : ''}`} data-tag={tag}>
-          {tag}
-        </button>
-      ))}
-    </div>
+      <!-- Filter Controls -->
+      <div class="filters-bar reveal d2" id="filters">
+        {tags.map(tag => (
+          <button
+            class={`filter-btn ${tag === 'All' ? 'active' : ''}`}
+            data-tag={tag}
+            type="button"
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
 
-    <!-- Projects grid -->
-    <div class="projects-grid" id="projectsGrid">
-      {projects.map(project => {
-        const color = tagColors[project.tag] ?? '#ea9216';
-        const repoName = project.githubRepo.split('/')[1] ?? project.slug;
-        return (
+      <!-- Projects Grid (2-Column Technical Modules) -->
+      <div class="projects-grid reveal d3" id="projectsGrid">
+        {projects.map(project => (
           <a
             href={`/projects/${project.slug}`}
             class="project-card"
             data-tag={project.tag}
           >
-            <!-- top bar accent -->
-            <div class="card-accent" style={`background:${color}`}></div>
-
-            <div class="card-body">
-              <div class="card-top">
-                <span class="card-tag" style={`color:${color};border-color:${color}28;background:${color}0d`}>
-                  {project.tag}
-                </span>
-                <span class="card-repo">{repoName}</span>
-              </div>
-
-              <h2 class="card-title">{project.title}</h2>
-              <p class="card-excerpt">{project.excerpt}</p>
+            <div class="card-top-row">
+              <span class="tag-chip">[{project.tag}]</span>
+              <span class="repo-chip">{project.githubRepo}</span>
             </div>
 
-            <div class="card-footer">
-              <span class="card-read">View Details</span>
-              <svg class="card-arrow" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+            <h2 class="card-title">{project.title}</h2>
+            <p class="card-excerpt">{project.excerpt}</p>
+
+            <div class="card-footer-row">
+              <span class="view-label">Inspect Technical Spec</span>
+              <span class="view-arrow">→</span>
             </div>
-
-
           </a>
-        );
-      })}
-    </div>
+        ))}
+      </div>
 
-    <!-- Empty state (shown by JS when filter has no results) -->
-    <div class="empty" id="emptyState" style="display:none">
-      <p>No projects found for this filter.</p>
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <span class="status-dot" style="background:var(--status-warning);" aria-hidden="true"></span>
+        <p>No operations found matching active filter taxonomy.</p>
+        <button class="btn-secondary" id="resetFilterBtn" type="button">Reset Filters</button>
+      </div>
     </div>
   </main>
 
-    <footer>
-    <div class="footer-left">
-      <a href="/" class="logo" style="text-decoration:none; color:inherit;">0x</a>
-      <span style="opacity:0.8;">Priyansh Khandal</span>
-    </div>
-    <div class="footer-legal" style="display:flex; gap:1rem; opacity:0.8;">
-      <a href="/privacy" style="color:inherit; text-decoration:none;">Privacy</a>
-      <a href="/tos" style="color:inherit; text-decoration:none;">Terms</a>
-      <a href="/cookie-policy" style="color:inherit; text-decoration:none;">Cookies</a>
-    </div>
-    <span class="dim" style="opacity:0.5;">{currentYear}</span>
-  </footer>
-
+  <Footer />
 </Layout>
 
-<script>
-  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
-  const cards      = document.querySelectorAll<HTMLElement>('.project-card');
-  const empty      = document.getElementById('emptyState')!;
-
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const tag = btn.dataset.tag!;
-      let visible = 0;
-
-      cards.forEach(card => {
-        const match = tag === 'All' || card.dataset.tag === tag;
-        card.style.display = match ? '' : 'none';
-        if (match) visible++;
-      });
-
-      empty.style.display = visible === 0 ? 'block' : 'none';
-    });
-  });
-</script>
-
 <style>
-  /* ── Main ── */
-  main {
-    flex: 1;
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-    padding: clamp(3rem, 6vw, 5rem) clamp(1rem, 5vw, 3rem);
+  .projects-page {
+    padding-top: clamp(2.5rem, 5vw, 4.5rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
   }
 
-  /* Page header */
-  .page-header { margin-bottom: 3rem; }
-
-  .page-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--font-label);
-    font-size: 0.68rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1rem;
-  }
-  .dot {
-    width: 6px; height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-    flex-shrink: 0;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: 0.4; transform: scale(1.5); }
-  }
-
-  .page-title {
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    letter-spacing: 0.03em;
-    line-height: 1;
-    margin-bottom: 0.75rem;
-  }
-
-  .page-sub {
-    font-family: var(--font-body);
-    font-size: clamp(0.82rem, 1.4vw, 0.9rem);
-    color: var(--muted);
-    line-height: 1.7;
-    max-width: 520px;
-  }
-
-  /* ── Filters ── */
-  .filters {
+  .page-header {
     display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 0.75rem;
     margin-bottom: 2.5rem;
   }
 
+  .eyebrow-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-sky);
+    width: fit-content;
+  }
+
+  .prompt-symbol {
+    font-weight: 700;
+  }
+
+  .page-title {
+    font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem);
+    color: var(--text-primary);
+  }
+
+  .page-sub {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  /* ── Filter Controls ── */
+  .filters-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
   .filter-btn {
-    font-family: var(--font-label);
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 4px;
-    padding: 5px 14px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    padding: 0.4rem 0.85rem;
     cursor: pointer;
-    transition: color 0.2s, background 0.2s, border-color 0.2s;
-    white-space: nowrap;
+    transition: all var(--transition-fast);
   }
   .filter-btn:hover {
-    color: var(--accent);
-    border-color: rgba(234,146,22,0.3);
-    background: rgba(234,146,22,0.05);
+    color: var(--text-primary);
+    background-color: var(--bg-hover);
+    border-color: var(--border-active);
   }
   .filter-btn.active {
-    color: var(--accent);
-    background: rgba(234,146,22,0.1);
-    border-color: rgba(234,146,22,0.4);
+    color: var(--accent-sky);
+    background-color: var(--bg-elevated);
+    border-color: var(--accent-sky);
   }
 
-  /* ── Grid ── */
+  /* ── 2-Column Grid ── */
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
   }
 
-  /* ── Card ── */
   .project-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background: var(--bg2);
-    border: 0.5px solid rgba(255,255,255,0.07);
-    border-radius: 12px;
-    text-decoration: none;
-    color: inherit;
-    overflow: hidden;
-    transition: border-color 0.3s, transform 0.3s, background 0.3s;
-  }
-  .project-card:hover {
-    border-color: rgba(234,146,22,0.3);
-    background: rgba(234,146,22,0.02);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2), 0 0 0 1px rgba(234,146,22,0.1);
-  }
-
-  /* top colour bar */
-  .card-accent {
-    height: 2px;
-    width: 100%;
-    opacity: 0.7;
-    transition: opacity 0.3s;
-  }
-  .project-card:hover .card-accent { opacity: 1; }
-
-  .card-body {
-    padding: 1.25rem 1.25rem 0.75rem;
-    flex: 1;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all var(--transition-fast);
+  }
+  .project-card:hover {
+    border-color: var(--border-active);
+    background-color: var(--bg-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
   }
 
-  .card-top {
+  .card-top-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+    gap: 0.75rem;
   }
 
-  .card-tag {
-    font-family: var(--font-label);
-    font-size: 0.58rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    padding: 3px 9px;
-    border-radius: 4px;
-    border: 1px solid;
-    white-space: nowrap;
+  .tag-chip {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent-sky);
+    padding: 2px 6px;
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
   }
 
-  .card-repo {
-    font-family: 'Fira Code', monospace;
-    font-size: 0.65rem;
-    color: var(--muted);
-    opacity: 0.6;
-    white-space: nowrap;
+  .repo-chip {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 140px;
+    white-space: nowrap;
   }
 
   .card-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.1rem, 2vw, 1.4rem);
-    letter-spacing: 0.03em;
-    line-height: 1.1;
-    color: var(--text);
-    transition: color 0.2s;
+    font-family: var(--font-sans);
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    line-height: 1.3;
   }
-  .project-card:hover .card-title { color: var(--accent); }
 
   .card-excerpt {
-    font-family: var(--font-body);
-    font-size: clamp(0.75rem, 1.2vw, 0.82rem);
-    color: var(--muted);
-    line-height: 1.75;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
     flex: 1;
   }
 
-  .card-footer {
+  .card-footer-row {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 0.75rem 1.25rem;
-    border-top: 0.5px solid rgba(255,255,255,0.05);
-    margin-top: auto;
-  }
-
-  .card-read {
-    font-family: var(--font-label);
-    font-size: 0.62rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    opacity: 0.55;
-    transition: opacity 0.2s;
-  }
-  .project-card:hover .card-read { opacity: 1; }
-
-  .card-arrow {
-    width: 13px; height: 13px;
-    color: var(--accent);
-    opacity: 0.55;
-    transition: opacity 0.2s;
-    flex-shrink: 0;
-  }
-  .project-card:hover .card-arrow { opacity: 1; }
-
-
-
-  /* Empty state */
-  .empty {
-    text-align: center;
-    padding: 4rem 2rem;
-    font-family: var(--font-label);
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  /* ── Footer ── */
-  footer {
-    display: flex;
     justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    padding: 1.5rem clamp(1rem, 5vw, 3rem);
-    border-top: 0.5px solid var(--border);
-    font-family: var(--font-label);
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-subtle);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
   }
-  .dim { opacity: 0.4; }
 
-  @media (max-width: 480px) {
-    footer { justify-content: center; text-align: center; }
+  .project-card:hover .view-label {
+    color: var(--accent-sky);
+  }
+  .project-card:hover .view-arrow {
+    color: var(--accent-sky);
+    transform: translateX(2px);
+  }
+
+  .view-arrow {
+    transition: transform var(--transition-fast), color var(--transition-fast);
+  }
+
+  .empty-state {
+    padding: 3rem 1.5rem;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
+
+<script>
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const cards = document.querySelectorAll<HTMLElement>('.project-card');
+  const empty = document.getElementById('emptyState') as HTMLElement | null;
+  const resetBtn = document.getElementById('resetFilterBtn') as HTMLButtonElement | null;
+
+  function setFilter(tag: string) {
+    filterBtns.forEach(b => b.classList.toggle('active', b.dataset.tag === tag));
+    let visibleCount = 0;
+    cards.forEach(card => {
+      const match = tag === 'All' || card.dataset.tag === tag;
+      card.style.display = match ? 'flex' : 'none';
+      if (match) visibleCount++;
+    });
+    if (empty) {
+      empty.style.display = visibleCount === 0 ? 'flex' : 'none';
+    }
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tag = btn.dataset.tag || 'All';
+      setFilter(tag);
+    });
+  });
+
+  resetBtn?.addEventListener('click', () => {
+    setFilter('All');
+  });
+</script>

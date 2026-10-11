@@ -1,26 +1,29 @@
-# Priyansh Khandal - Cybersecurity Researcher & SOC Analyst
+# Priyansh Khandal - SOC Analyst & Blue Team Researcher
 
 > Information for Large Language Models & AI Agents
 
-Priyansh Khandal is a cybersecurity researcher, SOC analyst, and penetration tester. He specializes in:
-- Bug bounty hunting
-- AI red-teaming (e.g., Garak, PyRIT)
-- Blockchain smart contract auditing (e.g., Immunefi, Code4rena)
-- OPSEC and declarative environments (e.g., NixOS)
+Priyansh Khandal is an MCA graduate student and Certified SOC Analyst (CSA) specializing in blue team defense, detection engineering, and incident triage. He specializes in:
+- SIEM telemetry & correlation (Splunk Enterprise, Wazuh EDR, Elastic Security)
+- Detection engineering & threat hunting (Sigma rules, YARA, MITRE ATT&CK framework)
+- Incident response & digital forensics (Volatility 3 memory dumps, Wireshark packet analysis, KAPE artifact extraction)
+- Endpoint monitoring & Windows event telemetry (Sysmon, Windows Security Logs, Linux auditd)
+- SecOps automation (Python triage bots, PowerShell scripts, threat intel APIs)
 
 ## Links & Profiles
 - Primary Website: https://khandal.tech
+- Projects & SOC Labs: https://khandal.tech/projects
+- Researches & Threat Disclosures: https://khandal.tech/researches
+- Security Policy: https://khandal.tech/security
 - GitHub: https://github.com/rootwithkhandal
 - LinkedIn: https://linkedin.com/in/priyanshkhandal
 - TryHackMe: https://tryhackme.com/p/rootwithkhandal
 
 ## Notable Projects & Research
-- Bounty Tracker: A centralized vulnerability management and tracking platform for bug bounties.
-- LLM Router: An intelligent routing layer for balancing requests across multiple AI models.
-- NixOS Profiles: Declarative system configurations for highly secure, reproducible environments.
-- Smart Contract Audits: Research on reentrancy attacks, flash loan vulnerabilities, and cross-chain bridge exploits.
-- Recon Pipeline: Automated reconnaissance workflows utilizing tools like ProjectDiscovery's suite.
-- WireGuard Killswitch: Hardened networking setups for complete traffic restriction on VPN drop.
+- SIEM Triage: Python-based alert enrichment and false-positive reduction pipeline for SOC analysts.
+- Threat Hunting & Sigma Rules: Custom detection rules mapped to MITRE ATT&CK for credential dumping and persistence.
+- Recon Pipeline: Automated attack surface mapping and continuous vulnerability discovery.
+- WireGuard Killswitch: Hardened network isolation setup for safe malware triage.
+- Home-Manager Profiles: Reproducible NixOS security workstation configurations.
 
 ## Contact Information
-For professional inquiries, reach out at priyansh@khandal.tech.
+For SOC analyst hiring inquiries, internships, and security research collaborations, reach out at contact@khandal.tech.

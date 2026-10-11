@@ -1,0 +1,405 @@
+---
+---
+
+<div class="terminal-workspace" id="terminalWorkspace">
+  <!-- Minimal Window Header -->
+  <div class="terminal-header">
+    <div class="terminal-dots" aria-hidden="true">
+      <span class="dot dot-close"></span>
+      <span class="dot dot-min"></span>
+      <span class="dot dot-max"></span>
+    </div>
+
+    <!-- Minimal Mode Switcher -->
+    <div class="terminal-tabs" role="tablist" aria-label="Terminal modes">
+      <button class="term-tab active" data-tab="siem" role="tab" aria-selected="true">
+        siem-triage
+      </button>
+      <button class="term-tab" data-tab="forensics" role="tab" aria-selected="false">
+        mem-forensics
+      </button>
+      <button class="term-tab" data-tab="sigma" role="tab" aria-selected="false">
+        sigma-rules
+      </button>
+    </div>
+
+    <div class="terminal-status">
+      <span class="status-pulse" aria-hidden="true"></span>
+      <span>active</span>
+    </div>
+  </div>
+
+  <!-- Terminal Body Stream -->
+  <div class="terminal-body">
+    <!-- Panel 1: SIEM Alert Triage -->
+    <div class="term-panel active" id="panel-siem">
+      <div class="cmd-row">
+        <span class="prompt-char">$</span>
+        <span class="cmd-text">splunk search 'index=wineventlog EventCode=1 (Image=*powershell*)'</span>
+      </div>
+      <div class="output-block">
+        <div class="out-line"><span class="k-label">[ALERT]</span>  <span class="k-val">MITRE T1059.001: Encoded PowerShell Execution</span></div>
+        <div class="out-line"><span class="k-label">[HOST]</span>   <span class="k-val">CORP-WKSTN-412\j.doe</span> <span class="k-sub">(PID 4920 · PPID 1084)</span></div>
+        <div class="out-line"><span class="k-label">[CLI]</span>    <span class="k-val">powershell.exe -NoP -NonI -W Hidden -enc SQBFAFgA...</span></div>
+        <div class="out-line"><span class="k-label">[C2]</span>     <span class="k-val">Beaconing to 198.51.100.24:443</span> <span class="k-sub">(Cobalt Strike)</span></div>
+        <div class="out-line"><span class="k-label">[TRIAGE]</span> <span class="k-val">Sysmon EID 1 + EID 3 correlated · Severity: High</span></div>
+      </div>
+      <div class="verdict-row">
+        <span class="verdict-check">✓</span>
+        <span>Malicious download cradle confirmed · Escalated to IR (#INC-8042)</span>
+      </div>
+    </div>
+
+    <!-- Panel 2: Memory Forensics (Volatility 3) -->
+    <div class="term-panel" id="panel-forensics">
+      <div class="cmd-row">
+        <span class="prompt-char">$</span>
+        <span class="cmd-text">vol -f memory_dump.raw windows.malfind --pid 4920</span>
+      </div>
+      <div class="output-block">
+        <div class="out-line"><span class="k-label">[SCAN]</span>   <span class="k-val">PID 4920 (powershell.exe) · Virtual memory scan</span></div>
+        <div class="out-line"><span class="k-label">[PAGE]</span>   <span class="k-val">0x000001dfa2900000</span> <span class="k-sub">(144 KB · PAGE_EXECUTE_READWRITE)</span></div>
+        <div class="out-line"><span class="k-label">[SIG]</span>    <span class="k-val">MZ header detected in unmapped RWX page</span></div>
+        <div class="out-line"><span class="k-label">[DISASM]</span> <span class="k-val">0x1dfa2901000 call 0x1dfa2901005</span> <span class="k-sub">; shellcode bootstrap</span></div>
+        <div class="out-line"><span class="k-label">[DISASM]</span> <span class="k-val">0x1dfa2901005 pop  rbx</span>           <span class="k-sub">; delta offset</span></div>
+      </div>
+      <div class="verdict-row">
+        <span class="verdict-check">✓</span>
+        <span>Process hollowing confirmed · Reflective DLL dumped to disk</span>
+      </div>
+    </div>
+
+    <!-- Panel 3: Detection Engineering (Sigma Rule) -->
+    <div class="term-panel" id="panel-sigma">
+      <div class="cmd-row">
+        <span class="prompt-char">$</span>
+        <span class="cmd-text">sigma check rules/proc_creation_win_cobalt_strike.yml</span>
+      </div>
+      <div class="output-block">
+        <div class="out-line"><span class="k-label">[RULE]</span>   <span class="k-val">Cobalt Strike Process Injection & Named Pipe Beaconing</span></div>
+        <div class="out-line"><span class="k-label">[TAX]</span>    <span class="k-val">attack.defense_evasion, attack.t1055, attack.t1059.001</span></div>
+        <div class="out-line"><span class="k-label">[TEST]</span>   <span class="k-val">SigmaHQ Core Taxonomy v2.1: 0 schema errors</span></div>
+        <div class="out-line"><span class="k-label">[SPL]</span>    <span class="k-sub">index=windows EventID=1 Image="*\rundll32.exe" Target="\\.\pipe\msse-*"</span></div>
+        <div class="out-line"><span class="k-label">[EVAL]</span>   <span class="k-val">4/4 True Positives · 0 False Positives</span></div>
+      </div>
+      <div class="verdict-row">
+        <span class="verdict-check">✓</span>
+        <span>Rule validated & compiled to Splunk SPL · Merged to repo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Minimal Interactive Prompt & Action Footer -->
+  <div class="terminal-footer">
+    <div class="prompt-line">
+      <span class="prompt-user">soc:~$</span>
+      <span class="active-command" id="activeCmdText">splunk search 'index=wineventlog EventCode=1 (Image=*powershell*)'</span>
+      <span class="cursor" aria-hidden="true"></span>
+    </div>
+    <button class="copy-action-btn" id="copyCmdBtn" type="button" aria-label="Copy active command">
+      <svg class="copy-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+      <span class="btn-text">Copy</span>
+    </button>
+  </div>
+</div>
+
+<style>
+  .terminal-workspace {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    width: 100%;
+    transition: border-color var(--transition-fast);
+  }
+  .terminal-workspace:hover {
+    border-color: var(--border-active);
+  }
+
+  /* ── Header ── */
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.55rem 0.9rem;
+    background-color: var(--bg-elevated);
+    border-bottom: 1px solid var(--border-subtle);
+    gap: 0.75rem;
+  }
+
+  .terminal-dots {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    opacity: 0.75;
+  }
+  .dot-close { background-color: #DE8F8F; }
+  .dot-min   { background-color: #DEC08B; }
+  .dot-max   { background-color: #8FB996; }
+
+  /* ── Tabs ── */
+  .terminal-tabs {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .term-tab {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-xs);
+    padding: 2px 7px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+  .term-tab:hover {
+    color: var(--text-primary);
+  }
+  .term-tab.active {
+    color: var(--accent-sky);
+    background-color: var(--bg-surface);
+    border-color: var(--border-subtle);
+  }
+
+  /* ── Status ── */
+  .terminal-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+  .status-pulse {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: var(--status-success);
+  }
+
+  /* ── Body ── */
+  .terminal-body {
+    padding: 1rem 1.1rem;
+    background-color: var(--bg-canvas);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.55;
+    min-height: 200px;
+  }
+
+  .term-panel {
+    display: none;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  .term-panel.active {
+    display: flex;
+  }
+
+  .cmd-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--text-primary);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .cmd-row::-webkit-scrollbar { display: none; }
+  .prompt-char {
+    color: var(--accent-sky);
+    font-weight: 700;
+  }
+  .cmd-text {
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+
+  .output-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .output-block::-webkit-scrollbar { display: none; }
+  .out-line {
+    white-space: pre;
+    font-size: 0.76rem;
+  }
+
+  .k-label {
+    color: var(--accent-sky);
+    font-weight: 600;
+  }
+  .k-val {
+    color: var(--text-secondary);
+  }
+  .k-sub {
+    color: var(--text-muted);
+  }
+
+  .verdict-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: var(--status-success);
+    padding-top: 0.35rem;
+    border-top: 1px dashed var(--border-subtle);
+  }
+  .verdict-check {
+    font-weight: 700;
+  }
+
+  /* ── Footer ── */
+  .terminal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.9rem;
+    background-color: var(--bg-surface);
+    border-top: 1px solid var(--border-subtle);
+    gap: 0.75rem;
+    font-family: var(--font-mono);
+  }
+
+  .prompt-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.74rem;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .prompt-user {
+    color: var(--accent-sage);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .active-command {
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cursor {
+    display: inline-block;
+    width: 6px;
+    height: 12px;
+    background-color: var(--accent-sky);
+    animation: blink 1s step-end infinite;
+    flex-shrink: 0;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .copy-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    padding: 3px 8px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all var(--transition-fast);
+  }
+  .copy-action-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--border-active);
+    background-color: var(--bg-hover);
+  }
+  .copy-icon {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .terminal-status {
+      display: none;
+    }
+    .terminal-tabs {
+      gap: 1px;
+    }
+    .term-tab {
+      padding: 2px 5px;
+      font-size: 0.65rem;
+    }
+  }
+</style>
+
+<script>
+  // Tab Switching
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.term-tab');
+  const panels = document.querySelectorAll<HTMLElement>('.term-panel');
+  const activeCmdText = document.getElementById('activeCmdText') as HTMLElement | null;
+
+  const tabCommands: Record<string, string> = {
+    siem: "splunk search 'index=wineventlog EventCode=1 (Image=*powershell*)'",
+    forensics: "vol -f memory_dump.raw windows.malfind --pid 4920",
+    sigma: "sigma check rules/proc_creation_win_cobalt_strike.yml"
+  };
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetId = tab.dataset.tab;
+      if (!targetId) return;
+
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      panels.forEach(p => p.classList.remove('active'));
+
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+
+      const activePanel = document.getElementById(`panel-${targetId}`);
+      if (activePanel) activePanel.classList.add('active');
+
+      if (tabCommands[targetId] && activeCmdText) {
+        activeCmdText.textContent = tabCommands[targetId];
+      }
+    });
+  });
+
+  // Copy button
+  const copyBtn = document.getElementById('copyCmdBtn') as HTMLButtonElement | null;
+  const btnText = copyBtn?.querySelector('.btn-text') as HTMLElement | null;
+
+  copyBtn?.addEventListener('click', async () => {
+    if (!activeCmdText) return;
+    try {
+      await navigator.clipboard.writeText(activeCmdText.textContent || '');
+      if (btnText) {
+        const originalText = btnText.textContent;
+        btnText.textContent = 'Copied!';
+        copyBtn.style.color = 'var(--status-success)';
+        setTimeout(() => {
+          btnText.textContent = originalText;
+          copyBtn.style.color = '';
+        }, 1500);
+      }
+    } catch {
+      // Fallback
+    }
+  });
+</script>

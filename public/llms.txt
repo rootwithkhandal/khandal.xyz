@@ -1,23 +1,31 @@
 # Priyansh Khandal
 
-> Cybersecurity Researcher, SOC Analyst, and Penetration Tester specializing in Bug Bounty, AI Red-Teaming, Smart Contract Auditing, and NixOS Security.
+> MCA Graduate Student, Certified SOC Analyst (CSA), and Blue Team Security Researcher specializing in SIEM Telemetry, Detection Engineering, Memory Forensics, and SecOps Automation.
 
-Priyansh Khandal is an offensive and defensive security researcher. His work spans SOC triage, automated reconnaissance pipelines, AI model security evaluation (red-teaming), EVM smart contract auditing, and declarative OPSEC.
+Priyansh Khandal is an MCA graduate student and Certified SOC Analyst (CSA). His focus centers on blue team security operations, enterprise SIEM log correlation, Sigma rule authoring, live host memory forensics, and SecOps triage automation.
 
 ## Primary Surfaces
-- [Home Page](https://khandal.tech): Overview, active skills, certifications, and contact options.
-- [Projects](https://khandal.tech/projects): Open-source security tools, penetration testing scripts, and system configurations.
+- [Home Page](https://khandal.tech): Overview, interactive SOC terminal workspace, competencies, certifications, and career contact desk.
+- [Projects](https://khandal.tech/projects): Practical SOC labs, detection engineering tools, SIEM pipelines, and system configurations.
 - [Researches](https://khandal.tech/researches): Technical writeups on vulnerability research, SIEM triage, and exploit mechanics.
+- [Security Policy](https://khandal.tech/security): Coordinated vulnerability disclosure, safe harbor terms, and PGP credentials.
 - [Sitemap](https://khandal.tech/sitemap-index.xml): XML sitemap listing all published routes.
 
 ## Core Specializations
-- **SOC Analysis & SIEM Triage:** Automated incident triage, log analysis, and detection engineering.
-- **AI Red-Teaming:** Security evaluations using PyRIT, Garak, and prompt-injection testing datasets.
-- **Smart Contract Security:** EVM vulnerability analysis, reentrancy detection, and protocol auditing.
-- **Declarative Security:** NixOS system hardening, reproducible security labs, and WireGuard killswitch routing.
+- **SIEM & Log Telemetry:** Splunk Enterprise, Wazuh EDR, Elastic Security, Sysmon Event correlation, and Linux auditd log aggregation.
+- **Detection Engineering:** Sigma rule development, YARA signatures, and MITRE ATT&CK adversary mapping.
+- **Digital Forensics & Incident Response:** Volatility 3 memory dump analysis, Wireshark pcap traffic inspection, and artifact acquisition.
+- **SecOps Scripting & Automation:** Python log enrichment bots, PowerShell triage scripts, and REST threat intelligence APIs.
+
+## Verified Credentials
+- Certified SOC Analyst (CSA) · EC-Council (2026)
+- IBM Cybersecurity Analyst Certificate · IBM / Coursera (2025)
+- SOC Level 1 Track · TryHackMe (Ranked Blue Team, 2025)
+- Google Cybersecurity Professional Certificate · Google (2025)
+- Master of Computer Applications (MCA) Degree Candidate (2024 – Present)
 
 ## External Profiles & Verification
 - GitHub: [rootwithkhandal](https://github.com/rootwithkhandal)
-- LinkedIn: [priyansh-khandal](https://linkedin.com/in/priyansh-khandal)
+- LinkedIn: [priyansh-khandal](https://linkedin.com/in/priyanshkhandal)
 - TryHackMe: [rootwithkhandal](https://tryhackme.com/p/rootwithkhandal)
-- Email: [priyansh@khandal.tech](mailto:priyansh@khandal.tech)
+- Email: [contact@khandal.tech](mailto:contact@khandal.tech)

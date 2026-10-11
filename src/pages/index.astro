@@ -1,127 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Nav from '../components/Nav.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
 import Hero from '../components/Hero.astro';
 import Profile from '../components/Profile.astro';
+import ThreatMap from '../components/ThreatMap.astro';
 import Projects from '../components/Projects.astro';
 import Researches from '../components/Researches.astro';
 import Faq, { faqSchema } from '../components/Faq.astro';
 import Contact from '../components/Contact.astro';
-
-const currentYear = new Date().getFullYear();
 ---
 
 <Layout extraSchema={faqSchema}>
-
-  <Nav />
-  <Hero />
-  <Profile />
-  <Projects />
-  <Researches />
-  <Faq />
-  <Contact />
-
-    <footer>
-    <div class="footer-left" style="display:flex; align-items:center; gap:1rem;">
-      <div class="footer-logo">0x</div>
-      <p>Priyansh Khandal</p>
-    </div>
-    <div class="footer-legal" style="display:flex; gap:1rem;">
-      <a href="/privacy" style="color:inherit; text-decoration:none;">Privacy</a>
-      <a href="/tos" style="color:inherit; text-decoration:none;">Terms</a>
-      <a href="/cookie-policy" style="color:inherit; text-decoration:none;">Cookies</a>
-    </div>
-    <p class="footer-year">khandal.tech · {currentYear}</p>
-  </footer>
+  <Header currentPath="/" />
+  <main id="main-content">
+    <Hero />
+    <Profile />
+    <ThreatMap />
+    <Projects />
+    <Researches />
+    <Faq />
+    <Contact />
+  </main>
+  <Footer />
 </Layout>
-
-<style>
-  footer {
-    border-top: 0.5px solid var(--border);
-    padding: clamp(1.2rem, 3vw, 2rem) clamp(1rem, 5vw, 3rem);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  footer p {
-    font-family: var(--font-label);
-    font-size: clamp(0.65rem, 1.2vw, 0.75rem);
-    color: var(--muted);
-    letter-spacing: 0.15em;
-  }
-  .footer-year { opacity: 0.5; }
-  .footer-logo {
-    font-family: var(--font-display);
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    letter-spacing: 0.1em;
-    color: rgba(234,146,22,0.4);
-  }
-
-  @media (max-width: 480px) {
-    footer { justify-content: center; text-align: center; }
-  }
-</style>
-
-<script>
-  /* ─────────────────────────────────────────
-     SCROLL-TRIGGERED FADE-UP  (.reveal)
-  ───────────────────────────────────────── */
-  const revealEls = document.querySelectorAll<HTMLElement>('.reveal');
-
-  const revealObserver = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          revealObserver.unobserve(entry.target);   // animate once
-        }
-      });
-    },
-    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-  );
-
-  revealEls.forEach(el => revealObserver.observe(el));
-
-  /* ─────────────────────────────────────────
-     3. NAV ACTIVE STATE on scroll
-  ───────────────────────────────────────── */
-  const sections  = document.querySelectorAll<HTMLElement>('[id]');
-  const navLinks  = document.querySelectorAll<HTMLAnchorElement>('.nav-links a');
-
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 120) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.classList.toggle('active', a.dataset.section === current);
-    });
-  }, { passive: true });
-
-  /* ─────────────────────────────────────────
-     4. PROFICIENCY BARS  (animate on reveal)
-  ───────────────────────────────────────── */
-  const barsContainer = document.querySelector('.lang-bar-wrap');
-  if (barsContainer) {
-    const barObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          document.querySelectorAll<HTMLElement>('.lang-fill').forEach(bar => {
-            const target = bar.dataset.width + '%';
-            // reset then animate
-            bar.style.width = '0%';
-            requestAnimationFrame(() => {
-              requestAnimationFrame(() => { bar.style.width = target; });
-            });
-          });
-          barObserver.disconnect();
-        }
-      });
-    }, { threshold: 0.4 });
-    barObserver.observe(barsContainer);
-  }
-</script>

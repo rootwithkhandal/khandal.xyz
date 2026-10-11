@@ -3,38 +3,38 @@ import ContentLayout from '../layouts/ContentLayout.astro';
 
 const htmlContent = `
   <h1>Privacy Policy</h1>
-  <p><strong>Last updated: September 4, 2026</strong></p>
+  <p><strong>Last updated: October 11, 2026</strong></p>
   
-  <div class="legal-summary" style="background: rgba(234,146,22,0.05); padding: 1rem; border-left: 3px solid var(--accent); margin: 2rem 0; border-radius: 4px;">
-    <strong>Plain-Language Summary:</strong> I don't track you. I only collect information you voluntarily provide (like when you email me) to respond to your queries. I don't sell your data, and you can ask me to delete it anytime.
+  <div class="legal-summary" style="background: var(--bg-surface); padding: 1.25rem; border: 1px solid var(--border-subtle); margin: 2rem 0; border-radius: var(--radius-xs);">
+    <strong style="color:var(--accent-sky);">Plain-Language Summary:</strong> Zero tracking. I only collect information you voluntarily provide (such as when you email me) to respond to your queries. I do not sell data, track browsing sessions, or deploy behavioral pixels.
   </div>
   
   <h2>1. Information I Collect</h2>
-  <p>I only collect personal information when it is voluntarily provided by you, such as when you reach out via email for professional inquiries. This website is a static portfolio and does not use account systems, databases, or hidden trackers.</p>
+  <p>I only collect personal information when voluntarily provided by you, such as when reaching out via email for professional inquiries or security audits. This website is a static portfolio and does not use account systems, marketing databases, or hidden trackers.</p>
   
   <h2>2. How I Use Your Information</h2>
-  <p>Any information you provide is used solely for professional communication—specifically, responding to your queries, project requests, or security discussions.</p>
+  <p>Any information you provide is used solely for professional communication: specifically, responding to your queries, project scoping, or coordinated security discussions.</p>
   
   <h2>3. Data Retention and Deletion</h2>
-  <p>I retain correspondence only as long as necessary to resolve the inquiry or for ongoing professional relationships. You have the right to request the deletion of any correspondence history by contacting me directly.</p>
+  <p>Correspondence is retained only as long as necessary to resolve the inquiry or support active professional engagements. You maintain the right to request deletion of correspondence history by contacting me directly.</p>
   
   <h2>4. Third-Party Links</h2>
-  <p>My website may link to external sites (like GitHub or TryHackMe) that are not operated by me. I have no control over the content and practices of these sites and cannot accept responsibility for their privacy policies.</p>
+  <p>This website links to external platforms (such as GitHub, TryHackMe, or LinkedIn). I have no control over the privacy practices of external services and encourage reviewing their respective policies.</p>
 
   <h2>5. Version History</h2>
   <ul>
+    <li><strong>v1.1 (Oct 2026):</strong> Hardened zero-tracking baseline and updated contact desks.</li>
     <li><strong>v1.0 (Sep 2026):</strong> Initial privacy policy published. Established no-tracking baseline.</li>
   </ul>
 
-  <h2>6. Legal & Privacy Contact</h2>
-  <p>For data, privacy, or legal enquiries, please contact: <a href="mailto:legal@khandal.tech">legal@khandal.tech</a></p>
+  <h2>6. Legal &amp; Privacy Contact</h2>
+  <p>For data, privacy, or legal enquiries, contact: <a href="mailto:contact@khandal.tech">contact@khandal.tech</a></p>
 `;
 ---
 
 <ContentLayout
   title="Privacy Policy"
   tag="Legal"
-  tagColor="#b3bdc5"
   meta="Legal · Privacy Policy"
   backHref="/"
   backLabel="Home"

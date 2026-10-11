@@ -1,420 +1,466 @@
 ---
-const skills = [
-  { label: 'Burp Suite Pro',    color: '#f26d6f' },
-  { label: 'Linux',             color: '#ea9216' },
-  { label: 'Python',            color: '#5fc08f' },
-  { label: 'Foundry',           color: '#6cabe6' },
-  { label: 'Ollama / LLMs',     color: '#b3bdc5' },
-  { label: 'WireGuard',         color: '#b3bdc5' },
-  { label: 'Slither',           color: '#f26d6f' },
-  { label: 'ProjectDiscovery',  color: '#6cabe6' },
+const competencies = [
+  {
+    id: '01',
+    category: 'SIEM & Telemetry',
+    title: 'SIEM Architecture & Log Correlation',
+    desc: 'Ingesting and correlating host telemetry, Windows Security Event Logs (EID 1, 3, 10, 4624, 4625), and Linux auditd logs for multi-source triage and alert fidelity.',
+    tools: ['Splunk Enterprise', 'Elastic Security', 'Wazuh EDR', 'Sysmon EID'],
+    icon: 'radar'
+  },
+  {
+    id: '02',
+    category: 'Detection Engineering',
+    title: 'Detection Engineering & Threat Hunting',
+    desc: 'Authoring vendor-agnostic Sigma rules mapped to MITRE ATT&CK techniques. Hunting unflagged persistence mechanisms, credential dumping, and lateral movement in enterprise logs.',
+    tools: ['Sigma Rules', 'YARA', 'MITRE ATT&CK', 'Splunk SPL'],
+    icon: 'target'
+  },
+  {
+    id: '03',
+    category: 'Incident Response',
+    title: 'Incident Triage & Digital Forensics',
+    desc: 'Rapid host triage, live memory dump analysis, process hollowing detection, network packet inspection, artifact timeline reconstruction, and containment playbooks.',
+    tools: ['Volatility 3', 'KAPE', 'Wireshark', 'Zeek'],
+    icon: 'search'
+  },
+  {
+    id: '04',
+    category: 'SecOps & Intel',
+    title: 'SecOps Automation & Threat Intel',
+    desc: 'Authoring triage automation scripts, IOC enrichment bots (VirusTotal, AbuseIPDB, Shodan), log normalization parsers, and custom detection test harnesses.',
+    tools: ['Python', 'PowerShell', 'MISP', 'REST APIs'],
+    icon: 'code'
+  }
 ];
 
-const proficiency = [
-  { label: 'SOC / Blue', pct: 85 },
-  { label: 'AI / MLSec', pct: 75 },
-  { label: 'Blockchain', pct: 80 },
-  { label: 'Offensive', pct: 65 },
-];
-
-const certificates = [
+const credentials = [
+  {
+    name: 'Master of Computer Applications (MCA)',
+    issuer: 'Active University Student · Systems & Cybersecurity',
+    year: '2024 – Present',
+    type: 'Degree Candidate',
+    url: 'https://linkedin.com/in/priyanshkhandal',
+  },
   {
     name: 'Certified SOC Analyst (CSA)',
     issuer: 'EC-Council',
     year: '2026',
-    color: '#ea9216',
+    type: 'Industry Certification',
     url: 'https://www.eccouncil.org/programs/certified-soc-analyst-csa/',
   },
   {
     name: 'IBM Cybersecurity Analyst Certificate',
     issuer: 'IBM / Coursera',
     year: '2025',
-    color: '#5fc08f',
+    type: 'Professional Cert',
     url: 'https://grow.google/certificates/cybersecurity/',
   },
   {
-    name: 'Cybersecurity 101',
-    issuer: 'TryHackMe',
+    name: 'SOC Level 1 Track',
+    issuer: 'TryHackMe (Ranked Blue Team)',
     year: '2025',
-    color: '#6cabe6',
-    url: 'https://tryhackme.com/path/outline/jrpenetrationtester',
+    type: 'Ranked Practical Track',
+    url: 'https://tryhackme.com/p/rootwithkhandal',
   },
   {
-    name: 'AI for Anomaly Detection',
-    issuer: 'Nvidia',
+    name: 'Google Cybersecurity Certificate',
+    issuer: 'Google Career Certificates',
     year: '2025',
-    color: '#b3bdc5',
-    url: 'https://tryhackme.com/path/outline/web',
+    type: 'Professional Cert',
+    url: 'https://grow.google/certificates/cybersecurity/',
   },
   {
-    name: 'Blockchain Security Basics',
-    issuer: 'Immunefi',
+    name: 'Cyber Defense & Threat Hunting Labs',
+    issuer: 'Blue Team Labs / LetsDefend',
     year: '2025',
-    color: '#f26d6f',
-    url: 'https://immunefi.com',
-  },
-  {
-    name: 'Introduction to AI Red-Teaming',
-    issuer: 'Microsoft / PyRIT',
-    year: '2025',
-    color: '#b3bdc5',
-    url: 'https://github.com/Azure/PyRIT',
+    type: 'Hands-on Labs',
+    url: 'https://github.com/rootwithkhandal',
   },
 ];
 ---
 
-<div id="profile">
-  <div class="section-inner">
-    <div class="section-label reveal d1">Profile</div>
-
-    <div class="profile-grid">
-      <!-- Avatar column -->
-      <div class="profile-avatar-wrap reveal d2">
-        <div class="profile-photo-box">
-          <img src="/profile.png" alt="Priyansh Khandal" class="profile-photo-img" />
-          <div class="profile-photo-glow"></div>
-          <div class="profile-name-tag">
-            <h3>Hello, I am</h3>
-            <p>PRIYANSH</p>
-          </div>
-        </div>
+<section id="profile" class="profile-section">
+  <div class="site-container">
+    <!-- Section Header -->
+    <div class="section-header reveal d1">
+      <div class="eyebrow-chip">
+        <span class="prompt-symbol">&gt;</span>
+        <span>~/soc_analyst_profile</span>
       </div>
+      <h2 class="section-title">Core Competencies &amp; Credentials</h2>
+      <p class="section-sub">
+        Certified SOC Analyst and MCA student with hands-on lab experience across SIEM correlation, detection engineering, and digital forensics.
+      </p>
+    </div>
 
-      <!-- Info column -->
-      <div class="profile-info">
-        <h2 class="reveal d2">About Me</h2>
-        <p class="profile-bio reveal d3">
-          Cybersecurity student, SOC analyst, and penetration tester with a hacker's mindset
-          and a strategist's discipline. My work spans bug bounty hunting, AI red-teaming with
-          Garak/PyRIT, and blockchain smart contract auditing on Immunefi and Code4rena.
-          Environments are declarative, terminal-native, and operationally compartmentalized by design.
-        </p>
-
-        <div class="skills-title reveal d3">Technical Stack</div>
-        <div class="skills-icons reveal d4">
-          {skills.map(({ label, color }) => (
-            <div class="skill-pill">
-              <div class="skill-dot" style={`background:${color}`}></div>
-              {label}
+    <!-- 4 Core Competencies (2x2 Grid with integrated tools) -->
+    <div class="competencies-grid">
+      {competencies.map((item, i) => (
+        <div class={`comp-card reveal d${(i % 2) + 2}`}>
+          <div class="comp-top">
+            <div class="comp-meta">
+              <span class="comp-num">{item.id}</span>
+              <span class="comp-category">{item.category}</span>
             </div>
-          ))}
-        </div>
-
-        <div class="profile-meta">
-          <div class="meta-block reveal d4">
-            <div class="meta-label">Education</div>
-            <div class="meta-item">
-              <strong>Masters of Computer Applications - Pursuing</strong>
-              <span>Active Student</span>
-              <span>Specialization: Cyber Security &amp; AI Safety</span>
-            </div>
-          </div>
-          <div class="meta-block reveal d5">
-            <div class="meta-label">Certifications &amp; Programs</div>
-            <div class="meta-item">
-              <strong>Bug Bounty · SOC Operations</strong>
-              <span>Certified SOC Analyst · Code4rena · Sherlock</span>
-              <span>TryHackMe · HackTheBox</span>
-            </div>
-          </div>
-          <div class="meta-block span-full reveal d6">
-            <div class="meta-label">Operational Proficiency</div>
-            <div class="lang-bar-wrap">
-              {proficiency.map(({ label, pct }) => (
-                <div class="lang-row">
-                  <span class="lang-name">{label}</span>
-                  <div class="lang-bar">
-                    <div class="lang-fill" data-width={pct} style="width:0%"></div>
-                  </div>
-                  <span class="lang-pct">{pct}%</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <!-- Certificates -->
-        <div class="certs-wrap reveal d7">
-          <div class="meta-label" style="margin-bottom:1rem">Certificates &amp; Credentials</div>
-          <div class="certs-grid">
-            {certificates.map(({ name, issuer, year, color, url }) => (
-              <a href={url} target="_blank" rel="noopener noreferrer" class="cert-card">
-
-                <div class="cert-body">
-                  <div class="cert-issuer" style={`color:${color}`}>{issuer} · {year}</div>
-                  <div class="cert-name">{name}</div>
-                </div>
-                <svg class="cert-arrow" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <div class="comp-icon" aria-hidden="true">
+              {item.icon === 'radar' && (
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 2a10 10 0 1 0 10 10"></path>
+                  <path d="M12 6a6 6 0 1 0 6 6"></path>
+                  <path d="M12 10a2 2 0 1 0 2 2"></path>
+                  <path d="M12 12 21 3"></path>
                 </svg>
-              </a>
+              )}
+              {item.icon === 'target' && (
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <circle cx="12" cy="12" r="6"></circle>
+                  <circle cx="12" cy="12" r="2"></circle>
+                </svg>
+              )}
+              {item.icon === 'search' && (
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.35-4.35"></path>
+                  <path d="M11 8v6"></path>
+                  <path d="M8 11h6"></path>
+                </svg>
+              )}
+              {item.icon === 'code' && (
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+              )}
+            </div>
+          </div>
+
+          <h3 class="comp-title">{item.title}</h3>
+          <p class="comp-desc">{item.desc}</p>
+
+          <!-- Integrated Tool Stack for this domain -->
+          <div class="comp-tools">
+            {item.tools.map(tool => (
+              <span class="tool-chip">{tool}</span>
             ))}
           </div>
         </div>
+      ))}
+    </div>
+
+    <!-- Credentials & Education Group -->
+    <div class="credentials-group reveal d4">
+      <div class="group-header">
+        <div class="group-title-row">
+          <span class="group-badge">VERIFIED BACKGROUND</span>
+          <h3 class="group-title">Education &amp; Credentials</h3>
+        </div>
+        <p class="group-desc">Formal university academics, vendor accreditations, and practical blue team lab completions.</p>
+      </div>
+
+      <div class="certs-grid">
+        {credentials.map(cert => (
+          <a
+            href={cert.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="cert-card"
+          >
+            <div class="cert-top-row">
+              <span class="cert-type">{cert.type}</span>
+              <span class="cert-year">{cert.year}</span>
+            </div>
+
+            <h4 class="cert-name">{cert.name}</h4>
+            <span class="cert-issuer">{cert.issuer}</span>
+
+            <div class="cert-verify-link">
+              <span>Verify Credential</span>
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </div>
+          </a>
+        ))}
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <style>
-  #profile {
-    background: var(--bg2);
-    padding: clamp(4rem, 8vw, 6rem) 0;
+  .profile-section {
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    border-top: 1px solid var(--border-subtle);
   }
 
-  .profile-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.6fr;
-    gap: clamp(2rem, 5vw, 5rem);
-    align-items: start;
-    margin-top: 2rem;
-  }
-
-  .profile-photo-box {
-    width: 100%;
-    aspect-ratio: 3/4;
-    border-radius: 12px;
-    border: 0.5px solid var(--border);
-    overflow: hidden;
-    position: relative;
-  }
-
-  .profile-photo-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-  }
-  .profile-photo-glow {
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 50% 80%, rgba(229,57,53,0.15) 0%, transparent 70%);
-  }
-  .profile-name-tag {
-    position: absolute;
-    bottom: -1px; left: 0; right: 0;
-    background: rgba(31,36,42,0.85);
-    border-top: 1px solid var(--border);
-    padding: 12px 16px;
-    text-align: center;
-  }
-  .profile-name-tag h3 {
-    font-family: var(--font-label);
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 2px;
-  }
-  .profile-name-tag p {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    letter-spacing: 0.12em;
-    color: var(--text);
-  }
-
-  /* Info */
-  .profile-info h2 {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 2.8rem);
-    letter-spacing: 0.05em;
-    margin-bottom: 0.5rem;
-  }
-  .profile-bio {
-    font-family: var(--font-body);
-    font-size: clamp(0.8rem, 1.4vw, 0.875rem);
-    color: var(--muted);
-    line-height: 1.9;
-    margin-bottom: 2.5rem;
-    max-width: 480px;
-  }
-
-  .skills-title {
-    font-family: var(--font-label);
-    font-size: 0.7rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 1rem;
-  }
-  .skills-icons {
+  .section-header {
     display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 2.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
   }
-  .skill-pill {
+
+  .eyebrow-chip {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    background: rgba(234,146,22,0.06);
-    border: 1px solid rgba(234,146,22,0.18);
-    border-radius: 2px;
-    padding: 6px 12px;
+    gap: 6px;
     font-family: var(--font-mono);
-    font-size: clamp(0.7rem, 1.3vw, 0.78rem);
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    color: var(--accent);
-    transition: background 0.2s, border-color 0.2s;
-    cursor: default;
+    font-size: 0.75rem;
+    color: var(--accent-sky);
+    width: fit-content;
   }
-  .skill-pill:hover {
-    background: rgba(234,146,22,0.12);
-    border-color: rgba(234,146,22,0.4);
-  }
-  .skill-dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    flex-shrink: 0;
+  .prompt-symbol {
+    font-weight: 700;
   }
 
-  /* Meta grid */
-  .profile-meta {
+  .section-title {
+    font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.1rem);
+    color: var(--text-primary);
+  }
+
+  .section-sub {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    max-width: 580px;
+    line-height: 1.6;
+  }
+
+  /* ── 4 Competency Cards (2x2 Grid) ── */
+  .competencies-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2.5rem;
   }
-  .span-full { grid-column: span 2; }
 
-  .meta-label {
-    font-family: var(--font-label);
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 0.6rem;
+  .comp-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 1.35rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    transition: all var(--transition-fast);
+  }
+  .comp-card:hover {
+    border-color: var(--border-active);
+    background-color: var(--bg-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .comp-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .comp-meta {
     display: flex;
     align-items: center;
     gap: 8px;
-  }
-  .meta-label::before {
-    content: '';
-    display: block;
-    width: 4px; height: 4px;
-    background: var(--accent);
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .meta-item {
-    font-family: var(--font-body);
-    font-size: clamp(0.75rem, 1.3vw, 0.82rem);
-    color: var(--muted);
-    line-height: 1.9;
-    padding-left: 12px;
-  }
-  .meta-item strong {
-    font-family: var(--font-body);
-    color: var(--text);
-    font-weight: 500;
-    display: block;
-    font-size: 0.84rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
   }
 
-  /* Proficiency bars */
-  .lang-bar-wrap { margin-top: 0.4rem; }
-  .lang-row {
+  .comp-num {
+    color: var(--accent-sky);
+    font-weight: 600;
+    padding: 2px 6px;
+    background-color: var(--bg-elevated);
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .comp-category {
+    color: var(--text-muted);
+  }
+
+  .comp-icon {
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .comp-card:hover .comp-icon {
+    color: var(--accent-sky);
+  }
+
+  .comp-title {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .comp-desc {
+    font-size: 0.825rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .comp-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .tool-chip {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    padding: 2px 7px;
+  }
+  .comp-card:hover .tool-chip {
+    border-color: var(--border-active);
+    color: var(--text-primary);
+  }
+
+  /* ── Credentials Group ── */
+  .credentials-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .group-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .group-title-row {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 8px;
-    font-family: var(--font-body);
-    font-size: clamp(0.7rem, 1.3vw, 0.78rem);
-    color: var(--muted);
-  }
-  .lang-name { width: 72px; flex-shrink: 0; }
-  .lang-pct  { width: 34px; text-align: right; color: var(--text); font-size: 0.72rem; flex-shrink: 0; }
-  .lang-bar {
-    flex: 1;
-    height: 2px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-  .lang-fill {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 2px;
-    transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
   }
 
-  /* Responsive */
-  @media (max-width: 899px) {
-    .profile-grid { grid-template-columns: 1fr; }
-    .profile-photo-box { max-width: 280px; margin: 0 auto; }
-    .profile-bio { max-width: 100%; }
-  }
-  @media (max-width: 599px) {
-    .profile-meta { grid-template-columns: 1fr; }
-    .span-full { grid-column: span 1; }
+  .group-badge {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--accent-sage);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    padding: 2px 6px;
+    letter-spacing: 0.04em;
   }
 
-  /* Certificates */
-  .certs-wrap { margin-top: 2.5rem; }
+  .group-title {
+    font-family: var(--font-sans);
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    font-weight: 600;
+  }
 
+  .group-desc {
+    font-size: 0.825rem;
+    color: var(--text-muted);
+  }
+
+  /* ── Certifications Grid (3 Columns) ── */
   .certs-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.85rem;
   }
 
   .cert-card {
     display: flex;
-    align-items: center;
-    gap: 0;
-    background: var(--bg3);
-    border: 0.5px solid rgba(255,255,255,0.07);
-    border-radius: 12px;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 1.1rem 1.2rem;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
     text-decoration: none;
     color: inherit;
-    overflow: hidden;
-    transition: border-color 0.3s, transform 0.3s, background 0.3s;
+    transition: all var(--transition-fast);
   }
   .cert-card:hover {
-    border-color: rgba(234,146,22,0.3);
-    background: rgba(234,146,22,0.03);
+    border-color: var(--border-active);
+    background-color: var(--bg-hover);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2), 0 0 0 1px rgba(234,146,22,0.1);
+    box-shadow: var(--shadow-sm);
   }
 
-
-  .cert-body {
-    flex: 1;
-    padding: 0.75rem 0.85rem;
-    min-width: 0;
+  .cert-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
   }
 
-  .cert-issuer {
-    font-family: var(--font-label);
-    font-size: 0.58rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    margin-bottom: 3px;
-    opacity: 0.85;
+  .cert-type {
+    color: var(--accent-sky);
+  }
+
+  .cert-year {
+    color: var(--text-muted);
   }
 
   .cert-name {
-    font-family: var(--font-body);
-    font-size: clamp(0.72rem, 1.1vw, 0.78rem);
-    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 600;
     line-height: 1.35;
-    font-weight: 500;
   }
 
-  .cert-arrow {
-    width: 13px; height: 13px;
-    color: var(--muted);
-    flex-shrink: 0;
-    margin-right: 0.75rem;
-    opacity: 0;
-    transition: opacity 0.2s, transform 0.2s;
+  .cert-issuer {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    flex: 1;
   }
-  .cert-card:hover .cert-arrow {
-    opacity: 1;
+
+  .cert-verify-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    transition: color var(--transition-fast);
+  }
+  .cert-card:hover .cert-verify-link {
+    color: var(--accent-sky);
+  }
+  .cert-verify-link svg {
+    transition: transform var(--transition-fast);
+  }
+  .cert-card:hover .cert-verify-link svg {
     transform: translate(1px, -1px);
   }
 
-  @media (max-width: 599px) {
-    .certs-grid { grid-template-columns: 1fr; }
+  /* ── Responsive ── */
+  @media (max-width: 960px) {
+    .competencies-grid {
+      grid-template-columns: 1fr;
+    }
+    .certs-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .certs-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

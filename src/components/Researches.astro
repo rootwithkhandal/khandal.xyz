@@ -1,182 +1,194 @@
 ---
 import { researches } from '../data/researches';
+
+// Show first 6 on homepage
+const displayResearches = researches.slice(0, 6);
 ---
 
-<div id="researches">
-  <div class="section-inner">
-    <div class="researches-header">
-      <div>
-        <div class="section-label reveal d1">Writing</div>
-        <div class="section-title reveal d2" style="margin-bottom:0">Field Notes</div>
+<section id="researches" class="researches-section">
+  <div class="site-container">
+    <div class="section-header reveal d1">
+      <div class="header-left">
+        <div class="eyebrow-chip">
+          <span class="prompt-symbol">&gt;</span>
+          <span>~/field_notes</span>
+        </div>
+        <h2 class="section-title">Security Research &amp; Writeups</h2>
       </div>
-      <a href="/researches" class="researches-all reveal d2">All Posts →</a>
+      <div class="header-right">
+        <a href="/researches" class="btn-secondary view-all-btn">
+          <span>All Writeups →</span>
+        </a>
+      </div>
     </div>
 
+    <!-- 3-Column Research Grid -->
     <div class="research-grid">
-      {researches.map(({ slug, tag, tagColor, title, excerpt, date, readTime }, i) => (
-        <a href={`/researches/${slug}`} class={`research-card reveal d${(i % 3) + 1}`}>
-          <div class="research-card-top">
-            <span class="research-tag" style={`color:${tagColor};border-color:${tagColor}30;background:${tagColor}0d`}>
-              {tag}
-            </span>
-            <span class="research-meta">{date} · {readTime} read</span>
+      {displayResearches.map((item, i) => (
+        <a
+          href={`/researches/${item.slug}`}
+          class={`research-card reveal d${(i % 3) + 2}`}
+        >
+          <div class="card-meta-row">
+            <span class="research-tag" style={`color: ${item.tagColor}; border-color: ${item.tagColor}33;`}>{item.tag}</span>
+            <span class="research-time">{item.readTime}</span>
           </div>
 
-          <h3 class="research-title">{title}</h3>
-          <p class="research-excerpt">{excerpt}</p>
+          <h3 class="research-title">{item.title}</h3>
+          <p class="research-excerpt">{item.excerpt}</p>
 
-          <div class="research-footer">
-            <span class="research-read-link">Read Article</span>
-            <svg class="research-arrow" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+          <div class="card-footer">
+            <span class="read-date">{item.date}</span>
+            <span class="read-arrow">→</span>
           </div>
-
         </a>
       ))}
     </div>
   </div>
-</div>
+</section>
 
 <style>
-  #researches {
-    background: var(--bg2);
-    padding: clamp(4rem, 8vw, 6rem) 0;
+  .researches-section {
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    border-top: 1px solid var(--border-subtle);
   }
 
-  .researches-header {
+  .section-header {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 1.75rem;
     flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
   }
 
-  .researches-all {
-    font-family: var(--font-label);
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .eyebrow-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
     font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    text-decoration: none;
-    opacity: 0.7;
-    transition: opacity 0.2s;
+    color: var(--accent-sky);
+    width: fit-content;
   }
-  .researches-all:hover { opacity: 1; }
 
+  .prompt-symbol {
+    font-weight: 700;
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.1rem);
+    color: var(--text-primary);
+  }
+
+  .view-all-btn {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    padding: 0.4rem 0.85rem;
+  }
+
+  /* ── 3-Column Research Grid ── */
   .research-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
   }
 
   .research-card {
-    position: relative;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem;
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
-    padding: 1.5rem;
-    background: var(--bg3);
-    border: 0.5px solid rgba(255,255,255,0.07);
-    border-radius: 12px;
+    gap: 0.5rem;
     text-decoration: none;
     color: inherit;
-    transition: border-color 0.3s, transform 0.3s, background 0.3s;
-    overflow: hidden;
+    transition: all var(--transition-fast);
   }
   .research-card:hover {
-    border-color: rgba(234,146,22,0.3);
-    background: rgba(234,146,22,0.03);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2), 0 0 0 1px rgba(234,146,22,0.1);
+    border-color: var(--border-active);
+    background-color: var(--bg-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
   }
 
-  .research-corner {
-    position: absolute;
-    width: 14px; height: 14px;
-    border-color: rgba(234,146,22,0.25);
-    border-style: solid;
-    transition: border-color 0.3s;
-  }
-  .research-corner.tl { top: 0; left: 0;     border-width: 1px 0 0 1px; }
-  .research-corner.br { bottom: 0; right: 0; border-width: 0 1px 1px 0; }
-  .research-card:hover .research-corner { border-color: rgba(234,146,22,0.6); }
-
-  .research-card-top {
+  .card-meta-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    flex-wrap: wrap;
   }
 
   .research-tag {
     font-family: var(--font-mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 3px 9px;
-    border-radius: 2px;
-    border: 1px solid;
+    font-size: 0.68rem;
+    padding: 2px 7px;
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
     white-space: nowrap;
   }
 
-  .research-meta {
-    font-family: var(--font-label);
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    white-space: nowrap;
+  .research-time {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
   }
 
   .research-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.1rem, 2vw, 1.35rem);
-    letter-spacing: 0.03em;
-    line-height: 1.15;
-    color: var(--text);
-    transition: color 0.2s;
+    font-family: var(--font-sans);
+    font-size: 1.025rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    line-height: 1.3;
   }
-  .research-card:hover .research-title { color: var(--accent); }
 
   .research-excerpt {
-    font-family: var(--font-body);
-    font-size: clamp(0.75rem, 1.2vw, 0.82rem);
-    color: var(--muted);
-    line-height: 1.75;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
     flex: 1;
   }
 
-  .research-footer {
+  .card-footer {
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-top: auto;
-    padding-top: 0.75rem;
-    border-top: 0.5px solid rgba(255,255,255,0.06);
+    justify-content: space-between;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--border-subtle);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
   }
 
-  .research-read-link {
-    font-family: var(--font-label);
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    opacity: 0.6;
-    transition: opacity 0.2s;
+  .research-card:hover .card-footer {
+    color: var(--accent-sky);
   }
-  .research-card:hover .research-read-link { opacity: 1; }
-
-  .research-arrow {
-    width: 14px; height: 14px;
-    color: var(--accent);
-    opacity: 0.6;
-    transition: opacity 0.2s;
-    flex-shrink: 0;
+  .research-card:hover .read-arrow {
+    transform: translateX(3px);
   }
-  .research-card:hover .research-arrow { opacity: 1; }
 
-  @media (max-width: 599px)  { .research-grid { grid-template-columns: 1fr; } .research-card { padding: 1.2rem; } }
+  .read-arrow {
+    transition: transform var(--transition-fast), color var(--transition-fast);
+  }
+
+  @media (max-width: 960px) {
+    .research-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .research-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

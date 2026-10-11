@@ -1,0 +1,1023 @@
+---
+---
+
+<section id="threat-telemetry" class="threat-section">
+  <div class="site-container">
+    <!-- Header -->
+    <div class="section-header reveal d1">
+      <div class="header-left">
+        <div class="eyebrow-chip">
+          <span class="prompt-symbol">&gt;</span>
+          <span>~/threat_intel/global_telemetry</span>
+        </div>
+        <h2 class="section-title">Live Global Threat Telemetry</h2>
+        <p class="section-sub">
+          Real-time honeypot correlation &amp; SIEM telemetry simulating adversary TTPs, active C2 beacons, and automated SOC containment actions worldwide.
+        </p>
+      </div>
+      <div class="header-right">
+        <div class="live-status-pill">
+          <span class="status-pulse" aria-hidden="true"></span>
+          <span class="stream-text">TELEMETRY: <strong id="epsCounter">18.4</strong> EPS</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Telemetry Workspace -->
+    <div class="threat-workspace reveal d2">
+      <!-- Left: Animated 3D Threat Globe -->
+      <div class="globe-panel">
+        <div class="globe-header-bar">
+          <div class="globe-mode-tags">
+            <span class="tag-radar">RADAR: 3D-SPHERE</span>
+            <span class="tag-geo">GEO-IP SENSORS</span>
+          </div>
+          <span class="drag-hint">Drag to rotate</span>
+        </div>
+
+        <div class="canvas-container">
+          <canvas id="attackGlobeCanvas" width="400" height="400"></canvas>
+
+          <!-- Floating Stats Overlay -->
+          <div class="globe-stats-bar">
+            <div class="stat-item">
+              <span class="stat-number" id="activeArcsCount">5</span>
+              <span class="stat-label">In-Flight Arcs</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" id="threatsBlockedCount">2,841</span>
+              <span class="stat-label">Attacks Triaged</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" id="honeypotNodesCount">14</span>
+              <span class="stat-label">Active Sensors</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="globe-legend">
+          <div class="legend-chip crit">
+            <span class="legend-dot"></span>
+            <span>Critical (C2 / Exploit)</span>
+          </div>
+          <div class="legend-chip high">
+            <span class="legend-dot"></span>
+            <span>High (Ransomware / DDoS)</span>
+          </div>
+          <div class="legend-chip med">
+            <span class="legend-dot"></span>
+            <span>Medium (SSH / Brute-Force)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Real-time SIEM Attack Feed -->
+      <div class="feed-panel">
+        <div class="feed-header-bar">
+          <div class="feed-title">
+            <span class="term-prompt">$</span>
+            <span>siem --tail=correlated_attacks.log</span>
+          </div>
+          <button type="button" class="feed-ctrl-btn" id="feedToggleBtn" aria-label="Pause or resume live attack stream">
+            <span class="ctrl-dot" aria-hidden="true"></span>
+            <span class="ctrl-text">PAUSE STREAM</span>
+          </button>
+        </div>
+
+        <!-- Event Stream Container -->
+        <div class="feed-stream" id="threatFeedList" role="log" aria-live="polite">
+          <!-- Populated dynamically via JavaScript -->
+        </div>
+
+        <!-- Bottom Telemetry Metric Strip -->
+        <div class="feed-metrics-footer">
+          <div class="metric-cell">
+            <span class="metric-k">Top Targeted Ports</span>
+            <span class="metric-v">TCP 445 (SMB) · TCP 22 (SSH) · TCP 8080</span>
+          </div>
+          <div class="metric-cell">
+            <span class="metric-k">Containment Engine</span>
+            <span class="metric-v">Wazuh EDR + Suricata IDS (Automated)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .threat-section {
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 680px;
+  }
+
+  .eyebrow-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-sky);
+    width: fit-content;
+  }
+  .prompt-symbol {
+    font-weight: 700;
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.1rem);
+    color: var(--text-primary);
+  }
+
+  .section-sub {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .live-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--status-success);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    padding: 0.4rem 0.8rem;
+  }
+  .status-pulse {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--status-success);
+    box-shadow: 0 0 0 0 rgba(143, 185, 150, 0.7);
+    animation: status-pulse-anim 2s infinite;
+  }
+  @keyframes status-pulse-anim {
+    0% { box-shadow: 0 0 0 0 rgba(143, 185, 150, 0.7); }
+    70% { box-shadow: 0 0 0 5px rgba(143, 185, 150, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(143, 185, 150, 0); }
+  }
+
+  /* ── Threat Workspace Grid ── */
+  .threat-workspace {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 1.25rem;
+    align-items: stretch;
+  }
+
+  /* ── Left: Globe Panel ── */
+  .globe-panel {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .globe-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 0.9rem;
+    background-color: var(--bg-elevated);
+    border-bottom: 1px solid var(--border-subtle);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .globe-mode-tags {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tag-radar {
+    color: var(--accent-sky);
+  }
+  .tag-geo {
+    color: var(--text-muted);
+  }
+  .drag-hint {
+    color: var(--text-muted);
+    font-size: 0.65rem;
+  }
+
+  .canvas-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0;
+    background-color: var(--bg-canvas);
+    min-height: 340px;
+    cursor: grab;
+    user-select: none;
+  }
+  .canvas-container:active {
+    cursor: grabbing;
+  }
+
+  #attackGlobeCanvas {
+    display: block;
+    width: 340px;
+    height: 340px;
+  }
+
+  .globe-stats-bar {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    pointer-events: none;
+  }
+
+  .stat-item {
+    background-color: rgba(24, 26, 31, 0.85);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    padding: 0.3rem 0.6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: var(--font-mono);
+  }
+  .stat-number {
+    font-size: 0.825rem;
+    font-weight: 600;
+    color: var(--accent-sky);
+  }
+  .stat-label {
+    font-size: 0.62rem;
+    color: var(--text-muted);
+  }
+
+  .globe-legend {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0.6rem 0.75rem;
+    background-color: var(--bg-elevated);
+    border-top: 1px solid var(--border-subtle);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+  }
+
+  .legend-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-secondary);
+  }
+  .legend-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  .legend-chip.crit .legend-dot { background-color: var(--status-error); }
+  .legend-chip.high .legend-dot { background-color: var(--status-warning); }
+  .legend-chip.med .legend-dot  { background-color: var(--accent-sky); }
+
+  /* ── Right: Live Feed Panel ── */
+  .feed-panel {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .feed-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 1rem;
+    background-color: var(--bg-elevated);
+    border-bottom: 1px solid var(--border-subtle);
+    font-family: var(--font-mono);
+    gap: 0.5rem;
+  }
+
+  .feed-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.74rem;
+    color: var(--text-primary);
+  }
+  .term-prompt {
+    color: var(--accent-sky);
+    font-weight: 700;
+  }
+
+  .feed-ctrl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    padding: 2px 7px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+  .feed-ctrl-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--border-active);
+  }
+  .ctrl-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: var(--status-success);
+  }
+  .feed-ctrl-btn.paused .ctrl-dot {
+    background-color: var(--status-warning);
+  }
+
+  .feed-stream {
+    flex: 1;
+    padding: 0.75rem 0.9rem;
+    background-color: var(--bg-canvas);
+    overflow-y: auto;
+    max-height: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    font-family: var(--font-mono);
+  }
+
+  /* ── Custom Scrollbar for Feed ── */
+  .feed-stream::-webkit-scrollbar {
+    width: 5px;
+  }
+  .feed-stream::-webkit-scrollbar-track {
+    background: var(--bg-canvas);
+  }
+  .feed-stream::-webkit-scrollbar-thumb {
+    background: var(--border-subtle);
+    border-radius: 2px;
+  }
+
+  /* Single Attack Row in Stream */
+  :global(.feed-row) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.45rem 0.65rem;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    font-size: 0.72rem;
+    animation: feed-slide-in 0.25s ease-out;
+    transition: border-color var(--transition-fast);
+  }
+  :global(.feed-row:hover) {
+    border-color: var(--border-active);
+    background-color: var(--bg-hover);
+  }
+  @keyframes feed-slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  :global(.feed-left) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  :global(.feed-time) {
+    color: var(--text-muted);
+    font-size: 0.65rem;
+    flex-shrink: 0;
+  }
+
+  :global(.feed-name) {
+    color: var(--text-primary);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  :global(.feed-vector) {
+    color: var(--accent-sky);
+    font-size: 0.68rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  :global(.feed-right) {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  :global(.sev-badge) {
+    font-size: 0.62rem;
+    font-weight: 600;
+    padding: 1px 5px;
+    border-radius: var(--radius-xs);
+    text-transform: uppercase;
+  }
+  :global(.sev-badge.crit) {
+    color: var(--status-error);
+    background-color: rgba(222, 143, 143, 0.12);
+    border: 1px solid rgba(222, 143, 143, 0.3);
+  }
+  :global(.sev-badge.high) {
+    color: var(--status-warning);
+    background-color: rgba(222, 192, 139, 0.12);
+    border: 1px solid rgba(222, 192, 139, 0.3);
+  }
+  :global(.sev-badge.med) {
+    color: var(--accent-sky);
+    background-color: rgba(155, 183, 212, 0.12);
+    border: 1px solid rgba(155, 183, 212, 0.3);
+  }
+
+  :global(.action-badge) {
+    font-size: 0.62rem;
+    color: var(--status-success);
+    background-color: rgba(143, 185, 150, 0.12);
+    border: 1px solid rgba(143, 185, 150, 0.3);
+    padding: 1px 5px;
+    border-radius: var(--radius-xs);
+  }
+
+  /* ── Bottom Metrics ── */
+  .feed-metrics-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 1rem;
+    background-color: var(--bg-elevated);
+    border-top: 1px solid var(--border-subtle);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .metric-cell {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .metric-k {
+    color: var(--text-muted);
+  }
+  .metric-v {
+    color: var(--accent-sky);
+    font-weight: 500;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 960px) {
+    .threat-workspace {
+      grid-template-columns: 1fr;
+    }
+    .canvas-container {
+      min-height: 300px;
+    }
+    #attackGlobeCanvas {
+      width: 300px;
+      height: 300px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .globe-stats-bar {
+      display: none;
+    }
+    .globe-legend {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+  }
+</style>
+
+<script>
+  // ── Types & Geolocation Data ──
+  interface GeoNode {
+    id: string;
+    label: string;
+    lat: number;
+    lon: number;
+    country: string;
+  }
+
+  interface AttackArc {
+    source: GeoNode;
+    target: GeoNode;
+    type: string;
+    severity: 'crit' | 'high' | 'med';
+    port: string;
+    progress: number;
+    speed: number;
+    color: string;
+  }
+
+  interface ImpactRipple {
+    lat: number;
+    lon: number;
+    radius: number;
+    maxRadius: number;
+    alpha: number;
+    color: string;
+  }
+
+  // Major global SOC sensors & attacker honeypots
+  const globalNodes: GeoNode[] = [
+    { id: 'US-EAST', label: 'Ashburn, VA', lat: 39.04, lon: -77.48, country: 'US' },
+    { id: 'US-WEST', label: 'San Jose, CA', lat: 37.33, lon: -121.88, country: 'US' },
+    { id: 'EU-CENTRAL', label: 'Frankfurt', lat: 50.11, lon: 8.68, country: 'DE' },
+    { id: 'EU-WEST', label: 'London', lat: 51.50, lon: -0.12, country: 'UK' },
+    { id: 'EU-NL', label: 'Amsterdam', lat: 52.36, lon: 4.90, country: 'NL' },
+    { id: 'APAC-TOKYO', label: 'Tokyo', lat: 35.68, lon: 139.65, country: 'JP' },
+    { id: 'APAC-SG', label: 'Singapore', lat: 1.35, lon: 103.82, country: 'SG' },
+    { id: 'IN-MUMBAI', label: 'Mumbai', lat: 19.07, lon: 72.87, country: 'IN' },
+    { id: 'SA-BRAZIL', label: 'São Paulo', lat: -23.55, lon: -46.63, country: 'BR' },
+    { id: 'AU-SYDNEY', label: 'Sydney', lat: -33.86, lon: 151.20, country: 'AU' },
+    { id: 'RU-MOSCOW', label: 'Moscow', lat: 55.75, lon: 37.61, country: 'RU' },
+    { id: 'CN-SHANGHAI', label: 'Shanghai', lat: 31.23, lon: 121.47, country: 'CN' },
+    { id: 'KR-SEOUL', label: 'Seoul', lat: 37.56, lon: 126.97, country: 'KR' },
+    { id: 'ZA-JOBURG', label: 'Johannesburg', lat: -26.20, lon: 28.04, country: 'ZA' }
+  ];
+
+  // Representative continent points (lat, lon) to render realistic high-tech dotted landmasses
+  const continentDots: [number, number][] = [
+    // North America
+    [48, -122], [45, -100], [40, -74], [34, -118], [30, -95], [25, -80], [55, -110], [60, -135], [52, -85], [38, -90], [42, -83],
+    // South America
+    [-10, -55], [-23, -46], [-34, -58], [4, -73], [-12, -77], [-15, -47], [-3, -60], [-25, -57],
+    // Europe
+    [51, 0], [48, 2], [52, 13], [55, 37], [40, -3], [41, 12], [59, 18], [60, 10], [50, 30], [56, 24],
+    // Africa
+    [30, 31], [9, 7], [-26, 28], [0, 32], [-4, 39], [15, 32], [33, -7], [-1, 36], [12, 15], [-18, 31],
+    // Asia
+    [39, 116], [35, 139], [31, 121], [22, 114], [37, 126], [19, 72], [28, 77], [13, 80], [1, 103], [13, 100],
+    [55, 82], [60, 100], [50, 120], [24, 54], [32, 51], [35, 51], [43, 76],
+    // Australia & Oceania
+    [-33, 151], [-37, 144], [-31, 115], [-19, 146], [-41, 174], [-12, 130]
+  ];
+
+  const attackPresets = [
+    { type: 'Cobalt Strike C2 Beacon', severity: 'crit' as const, port: 'TCP 443', color: '#DE8F8F' },
+    { type: 'Log4j JNDI RCE Exploit', severity: 'crit' as const, port: 'TCP 8080', color: '#DE8F8F' },
+    { type: 'SSH Brute-Force T1110', severity: 'high' as const, port: 'TCP 22', color: '#DEC08B' },
+    { type: 'Mirai Botnet SYN Flood', severity: 'high' as const, port: 'TCP 80', color: '#DEC08B' },
+    { type: 'SMB EternalBlue Probe', severity: 'crit' as const, port: 'TCP 445', color: '#DE8F8F' },
+    { type: 'Kerberoasting Ticket T1558', severity: 'med' as const, port: 'TCP 88', color: '#9BB7D4' },
+    { type: 'Process Hollowing Injection', severity: 'crit' as const, port: 'TCP 4444', color: '#DE8F8F' },
+    { type: 'WordPress XML-RPC Amplification', severity: 'med' as const, port: 'TCP 443', color: '#9BB7D4' }
+  ];
+
+  // ── Globe Canvas Engine ──
+  const canvas = document.getElementById('attackGlobeCanvas') as HTMLCanvasElement | null;
+  const ctx = canvas?.getContext('2d');
+
+  let rotY = 0;
+  const tiltX = 0.32; // ~18 degree tilt
+  let isDragging = false;
+  let lastMouseX = 0;
+  let animFrameId: number;
+  let isStreamPaused = false;
+  let totalThreatsCounter = 2841;
+
+  const activeArcs: AttackArc[] = [];
+  const activeRipples: ImpactRipple[] = [];
+
+  // Setup HiDPI Canvas
+  function initCanvas() {
+    if (!canvas || !ctx) return;
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    const width = rect.width || 340;
+    const height = rect.height || 340;
+
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    ctx.scale(dpr, dpr);
+  }
+
+  // 3D Spherical Projection Function
+  function project(lat: number, lon: number, radius: number, cx: number, cy: number, currentRotY: number) {
+    const phi = (lat * Math.PI) / 180;
+    const lambda = (lon * Math.PI) / 180;
+
+    // 3D coordinates on unit sphere
+    const x0 = radius * Math.cos(phi) * Math.sin(lambda - currentRotY);
+    const y0 = radius * Math.sin(phi);
+    const z0 = radius * Math.cos(phi) * Math.cos(lambda - currentRotY);
+
+    // Apply tilt around X axis
+    const x1 = x0;
+    const y1 = y0 * Math.cos(tiltX) - z0 * Math.sin(tiltX);
+    const z1 = y0 * Math.sin(tiltX) + z0 * Math.cos(tiltX);
+
+    return {
+      x: cx + x1,
+      y: cy - y1,
+      z: z1,
+      visible: z1 > 0
+    };
+  }
+
+  // Spawn new attack arc
+  function spawnAttack() {
+    if (activeArcs.length >= 7 || isStreamPaused) return;
+
+    // Pick random source and different target
+    const srcIndex = Math.floor(Math.random() * globalNodes.length);
+    let tgtIndex = Math.floor(Math.random() * globalNodes.length);
+    while (tgtIndex === srcIndex) {
+      tgtIndex = Math.floor(Math.random() * globalNodes.length);
+    }
+
+    const preset = attackPresets[Math.floor(Math.random() * attackPresets.length)];
+
+    activeArcs.push({
+      source: globalNodes[srcIndex],
+      target: globalNodes[tgtIndex],
+      type: preset.type,
+      severity: preset.severity,
+      port: preset.port,
+      progress: 0,
+      speed: 0.008 + Math.random() * 0.007,
+      color: preset.color
+    });
+
+    const activeArcsCountEl = document.getElementById('activeArcsCount');
+    if (activeArcsCountEl) activeArcsCountEl.textContent = activeArcs.length.toString();
+  }
+
+  // Append attack to live stream
+  function appendFeedRow(arc: AttackArc) {
+    const feedList = document.getElementById('threatFeedList');
+    if (!feedList) return;
+
+    const now = new Date();
+    const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}.${Math.floor(now.getMilliseconds() / 100)}`;
+
+    const row = document.createElement('div');
+    row.className = 'feed-row';
+    row.innerHTML = `
+      <div class="feed-left">
+        <span class="feed-time">${timeStr}</span>
+        <span class="feed-name">${arc.type}</span>
+        <span class="feed-vector">[${arc.source.country}] → [${arc.target.country}] (${arc.port})</span>
+      </div>
+      <div class="feed-right">
+        <span class="sev-badge ${arc.severity}">${arc.severity}</span>
+        <span class="action-badge">BLOCKED</span>
+      </div>
+    `;
+
+    feedList.prepend(row);
+
+    // Limit stream length to 14 elements
+    if (feedList.children.length > 14) {
+      feedList.removeChild(feedList.lastElementChild!);
+    }
+
+    // Update Counter
+    totalThreatsCounter++;
+    const totalBlockedEl = document.getElementById('threatsBlockedCount');
+    if (totalBlockedEl) {
+      totalBlockedEl.textContent = totalThreatsCounter.toLocaleString();
+    }
+  }
+
+  // Main Render Loop
+  function render() {
+    if (!canvas || !ctx) return;
+
+    const width = canvas.width / (window.devicePixelRatio || 1);
+    const height = canvas.height / (window.devicePixelRatio || 1);
+    const cx = width / 2;
+    const cy = height / 2;
+    const radius = Math.min(width, height) * 0.42;
+
+    ctx.clearRect(0, 0, width, height);
+
+    // Auto rotate if not dragging
+    if (!isDragging) {
+      rotY += 0.0035;
+    }
+
+    // 1. Draw Globe Silhouette & Atmosphere Rim
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.fillStyle = '#15171C';
+    ctx.fill();
+    ctx.strokeStyle = '#2B2F38';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    // 2. Draw Latitude Grids
+    const lats = [-60, -30, 0, 30, 60];
+    ctx.lineWidth = 0.75;
+    lats.forEach(lat => {
+      ctx.beginPath();
+      let first = true;
+      for (let lon = -180; lon <= 180; lon += 8) {
+        const p = project(lat, lon, radius, cx, cy, rotY);
+        if (p.visible) {
+          if (first) {
+            ctx.moveTo(p.x, p.y);
+            first = false;
+          } else {
+            ctx.lineTo(p.x, p.y);
+          }
+        } else {
+          first = true;
+        }
+      }
+      ctx.strokeStyle = 'rgba(155, 183, 212, 0.08)';
+      ctx.stroke();
+    });
+
+    // 3. Draw Longitude Meridians
+    for (let lon = -180; lon < 180; lon += 30) {
+      ctx.beginPath();
+      let first = true;
+      for (let lat = -90; lat <= 90; lat += 6) {
+        const p = project(lat, lon, radius, cx, cy, rotY);
+        if (p.visible) {
+          if (first) {
+            ctx.moveTo(p.x, p.y);
+            first = false;
+          } else {
+            ctx.lineTo(p.x, p.y);
+          }
+        } else {
+          first = true;
+        }
+      }
+      ctx.strokeStyle = 'rgba(155, 183, 212, 0.08)';
+      ctx.stroke();
+    }
+
+    // 4. Draw Continent Dots
+    continentDots.forEach(([lat, lon]) => {
+      const p = project(lat, lon, radius, cx, cy, rotY);
+      if (p.visible) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 1.8, 0, Math.PI * 2);
+        const depthAlpha = Math.max(0.15, (p.z / radius) * 0.65);
+        ctx.fillStyle = `rgba(164, 171, 184, ${depthAlpha})`;
+        ctx.fill();
+      }
+    });
+
+    // 5. Draw Global Sensor Nodes
+    globalNodes.forEach(node => {
+      const p = project(node.lat, node.lon, radius, cx, cy, rotY);
+      if (p.visible) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#9BB7D4';
+        ctx.fill();
+        ctx.strokeStyle = '#121316';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    });
+
+    // 6. Draw Attack Arcs in Flight
+    for (let i = activeArcs.length - 1; i >= 0; i--) {
+      const arc = activeArcs[i];
+      arc.progress += arc.speed;
+
+      // Calculate 3D points along great circle arc with parabolic height
+      const pSrc = project(arc.source.lat, arc.source.lon, radius, cx, cy, rotY);
+      const pTgt = project(arc.target.lat, arc.target.lon, radius, cx, cy, rotY);
+
+      // Interpolate lat/lon
+      const currentLat = arc.source.lat + (arc.target.lat - arc.source.lat) * arc.progress;
+      const currentLon = arc.source.lon + (arc.target.lon - arc.source.lon) * arc.progress;
+
+      // Parabolic altitude above surface
+      const altitude = Math.sin(arc.progress * Math.PI) * (radius * 0.35);
+      const currentRadius = radius + altitude;
+
+      const pCur = project(currentLat, currentLon, currentRadius, cx, cy, rotY);
+
+      // Draw projectile tip if visible
+      if (pCur.visible) {
+        // Draw path tail
+        ctx.beginPath();
+        const steps = 14;
+        let drawnFirst = false;
+        for (let s = 0; s <= steps; s++) {
+          const t = Math.max(0, arc.progress - (steps - s) * 0.012);
+          const tLat = arc.source.lat + (arc.target.lat - arc.source.lat) * t;
+          const tLon = arc.source.lon + (arc.target.lon - arc.source.lon) * t;
+          const tAlt = Math.sin(t * Math.PI) * (radius * 0.35);
+          const pt = project(tLat, tLon, radius + tAlt, cx, cy, rotY);
+
+          if (pt.visible) {
+            if (!drawnFirst) {
+              ctx.moveTo(pt.x, pt.y);
+              drawnFirst = true;
+            } else {
+              ctx.lineTo(pt.x, pt.y);
+            }
+          }
+        }
+        ctx.strokeStyle = arc.color;
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
+
+        // Projectile Head
+        ctx.beginPath();
+        ctx.arc(pCur.x, pCur.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = arc.color;
+        ctx.fill();
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // Check impact at target
+      if (arc.progress >= 1) {
+        activeRipples.push({
+          lat: arc.target.lat,
+          lon: arc.target.lon,
+          radius: 2,
+          maxRadius: 18,
+          alpha: 0.9,
+          color: arc.color
+        });
+
+        appendFeedRow(arc);
+        activeArcs.splice(i, 1);
+      }
+    }
+
+    // 7. Draw Impact Ripples
+    for (let r = activeRipples.length - 1; r >= 0; r--) {
+      const rip = activeRipples[r];
+      rip.radius += 0.65;
+      rip.alpha -= 0.035;
+
+      const p = project(rip.lat, rip.lon, radius, cx, cy, rotY);
+      if (p.visible && rip.alpha > 0) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, rip.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = rip.color;
+        ctx.globalAlpha = Math.max(0, rip.alpha);
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+
+      if (rip.alpha <= 0) {
+        activeRipples.splice(r, 1);
+      }
+    }
+
+    animFrameId = requestAnimationFrame(render);
+  }
+
+  // ── Drag Interaction ──
+  const container = canvas?.parentElement;
+  container?.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    lastMouseX = e.clientX;
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const deltaX = e.clientX - lastMouseX;
+    lastMouseX = e.clientX;
+    rotY += deltaX * 0.007;
+  });
+
+  window.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+
+  // Touch Support
+  container?.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      isDragging = true;
+      lastMouseX = e.touches[0].clientX;
+    }
+  });
+
+  window.addEventListener('touchmove', (e) => {
+    if (!isDragging || e.touches.length !== 1) return;
+    const deltaX = e.touches[0].clientX - lastMouseX;
+    lastMouseX = e.touches[0].clientX;
+    rotY += deltaX * 0.007;
+  });
+
+  window.addEventListener('touchend', () => {
+    isDragging = false;
+  });
+
+  // ── Periodic Attack Generator & EPS Fluctuation ──
+  let attackInterval: number;
+  let epsInterval: number;
+
+  function startTelemetry() {
+    // Initial batch of attacks
+    for (let i = 0; i < 4; i++) {
+      spawnAttack();
+    }
+
+    attackInterval = window.setInterval(() => {
+      spawnAttack();
+    }, 1800);
+
+    // Fluctuate EPS counter slightly
+    const epsCounterEl = document.getElementById('epsCounter');
+    epsInterval = window.setInterval(() => {
+      if (epsCounterEl && !isStreamPaused) {
+        const val = (16 + Math.random() * 5).toFixed(1);
+        epsCounterEl.textContent = val;
+      }
+    }, 2500);
+  }
+
+  // ── Feed Toggle (Pause / Resume) ──
+  const toggleBtn = document.getElementById('feedToggleBtn') as HTMLButtonElement | null;
+  toggleBtn?.addEventListener('click', () => {
+    isStreamPaused = !isStreamPaused;
+    const btnText = toggleBtn.querySelector('.ctrl-text');
+    if (isStreamPaused) {
+      toggleBtn.classList.add('paused');
+      if (btnText) btnText.textContent = 'RESUME STREAM';
+    } else {
+      toggleBtn.classList.remove('paused');
+      if (btnText) btnText.textContent = 'PAUSE STREAM';
+    }
+  });
+
+  // ── IntersectionObserver: Pause when off-screen for battery & 0% CPU ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        cancelAnimationFrame(animFrameId);
+        animFrameId = requestAnimationFrame(render);
+      } else {
+        cancelAnimationFrame(animFrameId);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  if (canvas) {
+    initCanvas();
+    observer.observe(canvas);
+    startTelemetry();
+    animFrameId = requestAnimationFrame(render);
+  }
+
+  window.addEventListener('resize', () => {
+    initCanvas();
+  });
+</script>
