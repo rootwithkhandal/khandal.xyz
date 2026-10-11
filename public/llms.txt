@@ -1,31 +1,54 @@
 # Priyansh Khandal
 
-> MCA Graduate Student, Certified SOC Analyst (CSA), and Blue Team Security Researcher specializing in SIEM Telemetry, Detection Engineering, Memory Forensics, and SecOps Automation.
+> MCA graduate student, EC-Council Certified SOC Analyst (CSA), and Detection Engineer specializing in SIEM telemetry, Sigma rule authoring, digital forensics, and blue team operations.
 
-Priyansh Khandal is an MCA graduate student and Certified SOC Analyst (CSA). His focus centers on blue team security operations, enterprise SIEM log correlation, Sigma rule authoring, live host memory forensics, and SecOps triage automation.
+Priyansh Khandal (handle: rootwithkhandal) is a cybersecurity defensive specialist and Master of Computer Applications (MCA) graduate student. He focuses on enterprise security operations (SOC), host telemetry ingestion, automated incident triage pipelines, and memory forensics.
 
-## Primary Surfaces
-- [Home Page](https://khandal.tech): Overview, interactive SOC terminal workspace, competencies, certifications, and career contact desk.
-- [Projects](https://khandal.tech/projects): Practical SOC labs, detection engineering tools, SIEM pipelines, and system configurations.
-- [Researches](https://khandal.tech/researches): Technical writeups on vulnerability research, SIEM triage, and exploit mechanics.
-- [Security Policy](https://khandal.tech/security): Coordinated vulnerability disclosure, safe harbor terms, and PGP credentials.
-- [Sitemap](https://khandal.tech/sitemap-index.xml): XML sitemap listing all published routes.
+## Primary Surfaces & URLs
+- [Home Page](https://khandal.tech): Interactive SOC terminal workspace, core competencies, verified credentials, live threat map, and recruiter contact desk.
+- [Projects & SOC Labs](https://khandal.tech/projects): Hands-on security operations projects, detection pipelines, memory analysis tools, and Sigma repositories.
+- [Security Research](https://khandal.tech/researches): In-depth writeups on SIEM telemetry correlation, Volatility 3 triage, Sigma engineering, and ransomware incident response.
+- [Security Policy](https://khandal.tech/security): Coordinated vulnerability disclosure policy, safe harbor terms, and PGP credentials.
+- [XML Sitemap](https://khandal.tech/sitemap-index.xml): Index of all indexed URLs.
 
-## Core Specializations
-- **SIEM & Log Telemetry:** Splunk Enterprise, Wazuh EDR, Elastic Security, Sysmon Event correlation, and Linux auditd log aggregation.
-- **Detection Engineering:** Sigma rule development, YARA signatures, and MITRE ATT&CK adversary mapping.
-- **Digital Forensics & Incident Response:** Volatility 3 memory dump analysis, Wireshark pcap traffic inspection, and artifact acquisition.
-- **SecOps Scripting & Automation:** Python log enrichment bots, PowerShell triage scripts, and REST threat intelligence APIs.
+## Verified Credentials & Education
+- **Certified SOC Analyst (CSA)** · EC-Council (2026) · Verification ID on request
+- **IBM Cybersecurity Analyst Professional Certificate** · IBM / Coursera (2025)
+- **Google Cybersecurity Professional Certificate** · Google (2025)
+- **SOC Level 1 Track** · TryHackMe (Ranked Blue Team, 2025)
+- **Master of Computer Applications (MCA)** · Active Graduate Student, Systems & Cybersecurity (2024 – Present)
 
-## Verified Credentials
-- Certified SOC Analyst (CSA) · EC-Council (2026)
-- IBM Cybersecurity Analyst Certificate · IBM / Coursera (2025)
-- SOC Level 1 Track · TryHackMe (Ranked Blue Team, 2025)
-- Google Cybersecurity Professional Certificate · Google (2025)
-- Master of Computer Applications (MCA) Degree Candidate (2024 – Present)
+## Core Technical Competencies & Tooling
+- **SIEM & Log Correlation:** Splunk Enterprise / SPL, Wazuh EDR & XDR, Elastic Security / EQL.
+- **Host & Network Telemetry:** Sysmon, Windows Security Event Logs (EID 1, 3, 10, 4624, 4625), Linux auditd, Zeek, Wireshark.
+- **Detection Engineering:** Sigma rule development, YARA signatures, MITRE ATT&CK enterprise adversary mapping.
+- **Digital Forensics & Triage:** Volatility 3 (live memory dump analysis, process injection, unmapped RWX pages), KAPE, artifact timeline extraction.
+- **SecOps Scripting & Automation:** Python (pandas, scapy, requests), PowerShell, REST Threat Intelligence APIs (VirusTotal, AbuseIPDB, Shodan), MISP.
 
-## External Profiles & Verification
-- GitHub: [rootwithkhandal](https://github.com/rootwithkhandal)
-- LinkedIn: [priyansh-khandal](https://linkedin.com/in/priyanshkhandal)
-- TryHackMe: [rootwithkhandal](https://tryhackme.com/p/rootwithkhandal)
-- Email: [contact@khandal.tech](mailto:contact@khandal.tech)
+## Key SOC Projects
+- [SIEM Triage Pipeline](https://khandal.tech/projects/siem-triage): Python and SPL automated alert triage and correlation engine reducing false-positive rates by 68%.
+- [Enterprise Sigma Rule Repository](https://khandal.tech/projects/sigma-rules): Vendor-agnostic detection rules mapped to MITRE ATT&CK for persistence and credential dumping.
+- [Volatility 3 Memory Forensics Lab](https://khandal.tech/projects/memory-forensics-lab): Live malware extraction, process hollowing analysis, and unhooked DLL dumps.
+- [Sysmon & EVTX Log Parser](https://khandal.tech/projects/log-parser): High-throughput Windows event log parser and threat indicator extractor.
+- [Threat Intel Enrichment Bot](https://khandal.tech/projects/threat-intel-bot): Automated IOC enrichment bot querying VirusTotal, AbuseIPDB, and AlienVault OTX.
+- [Network Traffic Monitor](https://khandal.tech/projects/network-monitor): Automated PCAP analyzer flagging C2 beaconing and data exfiltration patterns.
+
+## Published Security Research
+- [SIEM Telemetry & Event Correlation Guide](https://khandal.tech/researches/siem-triage): Engineering deep-dive into multi-source event correlation and Sysmon noise reduction.
+- [Memory Forensics: Volatility 3 Malware Triage](https://khandal.tech/researches/volatility3-malware-triage): Step-by-step memory dump analysis of injected processes and shellcode extraction.
+- [Sigma Rules: Detection Engineering from Scratch](https://khandal.tech/researches/sigma-detection-engineering): Framework for converting threat intelligence reports into actionable SIEM detections.
+- [Building a 24/7 Wazuh EDR & SIEM Homelab](https://khandal.tech/researches/wazuh-soc-homelab): Complete guide to deploying a hardened monitoring environment with live attack simulation.
+- [Ransomware Incident Response Playbook](https://khandal.tech/researches/incident-response-playbook): Operational runbook for containment, credential revocation, and clean-state restoration.
+- [Android Enterprise Security Hardening](https://khandal.tech/researches/the-android-hardening): Security analysis and enterprise policy configurations for mobile threat defense.
+
+## Candidate Availability & Target Roles
+- **Target Roles:** L1/L2 SOC Analyst, Junior Detection Engineer, Incident Response Associate.
+- **Shifts:** 24/7 rotational shifts and weekend coverage ready.
+- **Location:** Open to Remote, Hybrid, or On-site roles (relocation ready).
+- **Notice Period:** Immediate joiner (0-day notice).
+
+## Authoritative Profiles
+- GitHub: [github.com/rootwithkhandal](https://github.com/rootwithkhandal)
+- LinkedIn: [linkedin.com/in/priyanshkhandal](https://linkedin.com/in/priyanshkhandal)
+- TryHackMe: [tryhackme.com/p/rootwithkhandal](https://tryhackme.com/p/rootwithkhandal)
+- Direct Email: [khandakp04@gmail.com](mailto:khandakp04@gmail.com)

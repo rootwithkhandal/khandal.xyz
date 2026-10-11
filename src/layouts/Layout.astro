@@ -29,37 +29,86 @@ const personSchema = {
   "@type": "Person",
   "@id": `${siteUrl}/#person`,
   "name": "Priyansh Khandal",
+  "alternateName": ["rootwithkhandal"],
   "url": siteUrl,
   "email": "mailto:khandakp04@gmail.com",
   "image": ogImage,
-  "jobTitle": "SOC Analyst & Security Researcher",
+  "jobTitle": "SOC Analyst & Detection Engineer",
   "description": description,
   "sameAs": [
     "https://github.com/rootwithkhandal",
     "https://linkedin.com/in/priyanshkhandal",
     "https://tryhackme.com/p/rootwithkhandal"
   ],
+  "hasCredential": [
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "Certified SOC Analyst (CSA)",
+      "credentialCategory": "Professional Certification",
+      "recognizedBy": {
+        "@type": "Organization",
+        "name": "EC-Council"
+      }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "IBM Cybersecurity Analyst Professional Certificate",
+      "credentialCategory": "Professional Certificate",
+      "recognizedBy": {
+        "@type": "Organization",
+        "name": "IBM"
+      }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "Google Cybersecurity Professional Certificate",
+      "credentialCategory": "Professional Certificate",
+      "recognizedBy": {
+        "@type": "Organization",
+        "name": "Google"
+      }
+    }
+  ],
+  "alumniOf": {
+    "@type": "EducationalOrganization",
+    "name": "Master of Computer Applications (MCA)"
+  },
   "knowsAbout": [
-    { "@type": "DefinedTerm", "name": "SOC Analysis & Incident Triage" },
-    { "@type": "DefinedTerm", "name": "SIEM Telemetry & Splunk/Wazuh" },
+    { "@type": "DefinedTerm", "name": "Security Operations Center (SOC)" },
+    { "@type": "DefinedTerm", "name": "SIEM Correlation (Splunk, Elastic, Wazuh)" },
     { "@type": "DefinedTerm", "name": "Detection Engineering & Sigma Rules" },
-    { "@type": "DefinedTerm", "name": "Digital Forensics & Memory Analysis" },
+    { "@type": "DefinedTerm", "name": "Digital Forensics & Memory Analysis (Volatility 3)" },
     { "@type": "DefinedTerm", "name": "Threat Hunting & MITRE ATT&CK" },
-    { "@type": "DefinedTerm", "name": "Blue Team Operations" },
-    { "@type": "DefinedTerm", "name": "SecOps Automation" },
-    { "@type": "DefinedTerm", "name": "Malware Triage & Reverse Engineering" }
+    { "@type": "DefinedTerm", "name": "Blue Team Operations & Incident Triage" },
+    { "@type": "DefinedTerm", "name": "Sysmon & Windows Security Event Logs (EVTX)" },
+    { "@type": "DefinedTerm", "name": "SecOps Automation with Python & PowerShell" }
   ]
 };
 
 const profilePageSchema = {
   "@context": "https://schema.org",
   "@type": "ProfilePage",
+  "@id": `${siteUrl}/#profilepage`,
+  "url": canonical,
+  "name": title,
+  "description": description,
   "mainEntity": { "@id": `${siteUrl}/#person` },
   "dateCreated": "2026-01-01T00:00:00Z",
   "dateModified": new Date().toISOString()
 };
 
-const schemas = [personSchema, profilePageSchema];
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${siteUrl}/#website`,
+  "url": siteUrl,
+  "name": "Priyansh Khandal · SOC Analyst Portfolio",
+  "description": "SOC analyst portfolio, detection engineering labs, SIEM telemetry correlation, and blue team security research by Priyansh Khandal.",
+  "publisher": { "@id": `${siteUrl}/#person` },
+  "inLanguage": "en-US"
+};
+
+const schemas = [personSchema, profilePageSchema, websiteSchema];
 if (extraSchema) {
   if (Array.isArray(extraSchema)) {
     schemas.push(...extraSchema);
@@ -78,8 +127,16 @@ if (extraSchema) {
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="author" content="Priyansh Khandal" />
-  <meta name="keywords" content="Priyansh Khandal, reverse engineering, malware analysis, cybersecurity, penetration testing, bug bounty, SOC analyst, smart contracts, AI red-team, NixOS" />
+  <meta name="keywords" content="Priyansh Khandal, SOC Analyst, Certified SOC Analyst, EC-Council CSA, Detection Engineer, Blue Team, SIEM, Splunk, Wazuh, Sysmon, Sigma Rules, Digital Forensics, Volatility 3, Incident Response, Cybersecurity Portfolio, MCA Graduate" />
   <link rel="canonical" href={canonical} />
+
+  <!-- GEO Optimization (Generative & Search Geo Targeting) -->
+  <meta name="geo.region" content="IN" />
+  <meta name="geo.placename" content="India" />
+
+  <!-- Discovery for LLMs / AI Search Engines (AEO / GEO) -->
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Context Manifest" />
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap-index.xml" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -87,6 +144,7 @@ if (extraSchema) {
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={ogImage} />
+  <meta property="og:image:alt" content="Priyansh Khandal - SOC Analyst & Detection Engineer" />
   <meta property="og:site_name" content="Priyansh Khandal" />
   <meta property="og:locale" content="en_US" />
 
@@ -95,6 +153,7 @@ if (extraSchema) {
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
+  <meta name="twitter:image:alt" content="Priyansh Khandal - SOC Analyst & Detection Engineer" />
 
   <!-- Structured data (JSON-LD) -->
   {schemas.map(s => (
@@ -102,7 +161,7 @@ if (extraSchema) {
   ))}
 
   <!-- Robots & Chrome Theme -->
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="theme-color" content="#121316" />
 
   <!-- Favicon Suite -->

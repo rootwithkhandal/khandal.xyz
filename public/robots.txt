@@ -1,4 +1,26 @@
+# Robots.txt for khandal.tech
 User-agent: *
 Allow: /
 
+# Directives for AI Search & Answer Engines (AEO / GEO)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Sitemaps
 Sitemap: https://khandal.tech/sitemap-index.xml
+Sitemap: https://khandal.tech/sitemap-0.xml

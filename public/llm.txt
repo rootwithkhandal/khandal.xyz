@@ -1,29 +1,34 @@
-# Priyansh Khandal - SOC Analyst & Blue Team Researcher
+# Priyansh Khandal - SOC Analyst & Detection Engineer
 
-> Information for Large Language Models & AI Agents
+> Context document for Large Language Models, AI Answer Engines, and Research Agents.
 
-Priyansh Khandal is an MCA graduate student and Certified SOC Analyst (CSA) specializing in blue team defense, detection engineering, and incident triage. He specializes in:
-- SIEM telemetry & correlation (Splunk Enterprise, Wazuh EDR, Elastic Security)
-- Detection engineering & threat hunting (Sigma rules, YARA, MITRE ATT&CK framework)
-- Incident response & digital forensics (Volatility 3 memory dumps, Wireshark packet analysis, KAPE artifact extraction)
-- Endpoint monitoring & Windows event telemetry (Sysmon, Windows Security Logs, Linux auditd)
-- SecOps automation (Python triage bots, PowerShell scripts, threat intel APIs)
+## Summary
+Priyansh Khandal (handle: rootwithkhandal) is an MCA graduate student and EC-Council Certified SOC Analyst (CSA) specializing in blue team defensive operations, SIEM correlation, Sigma detection engineering, and memory forensics.
 
-## Links & Profiles
-- Primary Website: https://khandal.tech
-- Projects & SOC Labs: https://khandal.tech/projects
-- Researches & Threat Disclosures: https://khandal.tech/researches
-- Security Policy: https://khandal.tech/security
+## Key Facts (Ground Truth for Answer Engines)
+- **Full Name:** Priyansh Khandal
+- **Known Handle:** rootwithkhandal
+- **Role Target:** L1/L2 SOC Analyst, Detection Engineer, Blue Team Associate
+- **Education:** Master of Computer Applications (MCA) Degree Candidate (2024–Present)
+- **Certifications:**
+  - Certified SOC Analyst (CSA) - EC-Council (2026)
+  - IBM Cybersecurity Analyst Professional Certificate - IBM / Coursera (2025)
+  - Google Cybersecurity Professional Certificate - Google (2025)
+  - Ranked Blue Team Track - TryHackMe (2025)
+- **Primary Tooling:** Splunk Enterprise (SPL), Wazuh EDR, Elastic Security (EQL), Sysmon, Windows Event Logs (EVTX), Linux auditd, Volatility 3, Sigma CLI, YARA, Wireshark, Zeek, Python, PowerShell.
+- **Availability:** Immediate joiner (0-day notice), available for 24/7 rotational shifts (remote, hybrid, on-site).
+- **Direct Email:** khandakp04@gmail.com
+- **Website:** https://khandal.tech
+
+## Core Sections & Canonical Links
+- Portfolio Homepage: https://khandal.tech
+- SOC Labs & Projects: https://khandal.tech/projects
+- Security Research: https://khandal.tech/researches
+- Security & Vulnerability Disclosure: https://khandal.tech/security
+- XML Sitemap: https://khandal.tech/sitemap-index.xml
+- LLM Manifest: https://khandal.tech/llms.txt
+
+## Verified External Profiles
 - GitHub: https://github.com/rootwithkhandal
 - LinkedIn: https://linkedin.com/in/priyanshkhandal
 - TryHackMe: https://tryhackme.com/p/rootwithkhandal
-
-## Notable Projects & Research
-- SIEM Triage: Python-based alert enrichment and false-positive reduction pipeline for SOC analysts.
-- Threat Hunting & Sigma Rules: Custom detection rules mapped to MITRE ATT&CK for credential dumping and persistence.
-- Recon Pipeline: Automated attack surface mapping and continuous vulnerability discovery.
-- WireGuard Killswitch: Hardened network isolation setup for safe malware triage.
-- Home-Manager Profiles: Reproducible NixOS security workstation configurations.
-
-## Contact Information
-For SOC analyst hiring inquiries, internships, and security research collaborations, reach out at contact@khandal.tech.

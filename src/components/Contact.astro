@@ -5,7 +5,7 @@ const channels = [
     handle: 'in/priyanshkhandal',
     href: 'https://linkedin.com/in/priyanshkhandal',
     badge: 'Hiring & Network',
-    desc: 'Connect for full-time opportunities, referrals, and technical discussions.',
+    desc: 'Connect for full-time SOC roles, referrals, and technical discussions.',
     icon: 'linkedin'
   },
   {
@@ -28,7 +28,7 @@ const channels = [
     name: 'Direct Email',
     handle: 'khandakp04@gmail.com',
     href: 'mailto:khandakp04@gmail.com?subject=SOC%20Analyst%20Role%20Inquiry',
-    badge: 'Direct Response',
+    badge: 'Direct Inquiries',
     desc: 'Direct inbox for interview scheduling, technical inquiries, and offers.',
     icon: 'mail'
   }
@@ -37,114 +37,119 @@ const channels = [
 
 <section id="contact" class="contact-section">
   <div class="site-container">
-    <div class="contact-grid">
-      <!-- Left Column: Context, Availability & Primary Action -->
-      <div class="contact-left">
-        <div class="section-header reveal d1">
-          <div class="eyebrow-chip">
-            <span class="prompt-symbol">&gt;</span>
-            <span>~/connect</span>
+    <!-- Full-Width Section Header (Standardized with Profile & Projects) -->
+    <div class="section-header reveal d1">
+      <div class="eyebrow-chip">
+        <span class="prompt-symbol">&gt;</span>
+        <span>~/connect</span>
+      </div>
+      <h2 class="section-title">Let's Connect</h2>
+      <p class="section-sub">
+        Actively seeking L1/L2 SOC Analyst roles, detection engineering opportunities, and blue team collaborations. Open to rotational shifts — remote, hybrid, or on-site.
+      </p>
+    </div>
+
+    <!-- Symmetrical Workspace: Aligned Left Status Card & Right 2x2 Channels -->
+    <div class="contact-workspace reveal d2">
+      <!-- Left Column: Operational Availability & Quick Contact Card -->
+      <div class="status-card">
+        <div class="status-card-header">
+          <div class="status-indicator">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            <span class="status-heading">Available for Immediate Hire</span>
           </div>
-          <h2 class="contact-title">Let's Connect</h2>
-          <p class="contact-desc">
-            Actively seeking L1/L2 SOC Analyst roles, detection engineering opportunities, and blue team collaborations. Open to rotational shifts — remote, hybrid, or on-site.
-          </p>
+          <span class="status-badge">L1 / L2 SOC Ready</span>
         </div>
 
-        <!-- Availability Status Card -->
-        <div class="status-card reveal d2">
-          <div class="status-card-header">
-            <div class="status-indicator">
-              <span class="pulse-dot" aria-hidden="true"></span>
-              <span class="status-text">Available for Immediate Hire</span>
-            </div>
-            <span class="status-tag">L1 / L2 SOC Ready</span>
+        <div class="status-rows">
+          <div class="meta-row">
+            <span class="row-label">Target Roles</span>
+            <span class="row-val">L1/L2 SOC Analyst · Detection Engineer</span>
           </div>
+          <div class="meta-row">
+            <span class="row-label">Shifts</span>
+            <span class="row-val">24/7 rotational shifts · Weekend coverage ready</span>
+          </div>
+          <div class="meta-row">
+            <span class="row-label">Location</span>
+            <span class="row-val">Remote · Hybrid · On-site (Relocation ready)</span>
+          </div>
+          <div class="meta-row">
+            <span class="row-label">Notice</span>
+            <span class="row-val">Immediate joiner · 0-day notice</span>
+          </div>
+          <div class="meta-row">
+            <span class="row-label">Direct Mail</span>
+            <span class="row-val font-mono">khandakp04@gmail.com</span>
+          </div>
+        </div>
 
-          <div class="status-details">
-            <div class="status-row">
-              <span class="status-label">Shifts</span>
-              <span class="status-val">24/7 rotational shifts · Weekend coverage ready</span>
-            </div>
-            <div class="status-row">
-              <span class="status-label">Location</span>
-              <span class="status-val">Remote · Hybrid · On-site (Relocation ready)</span>
-            </div>
-            <div class="status-row">
-              <span class="status-label">Notice</span>
-              <span class="status-val">Immediate joiner · 0-day notice</span>
-            </div>
-          </div>
-
-          <div class="status-action">
-            <a href="mailto:khandakp04@gmail.com?subject=SOC%20Analyst%20Opportunity" class="btn-primary email-btn">
-              <span>Send Direct Email</span>
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </a>
-          </div>
+        <div class="status-action">
+          <a href="mailto:khandakp04@gmail.com?subject=SOC%20Analyst%20Opportunity" class="btn-primary email-btn">
+            <span>Send Direct Email</span>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
         </div>
       </div>
 
-      <!-- Right Column: 4 Clean Channel Cards -->
-      <div class="contact-right reveal d3">
-        <div class="channels-grid">
-          {channels.map((c) => (
-            <a
-              href={c.href}
-              target={c.href.startsWith('mailto:') ? undefined : '_blank'}
-              rel={c.href.startsWith('mailto:') ? undefined : 'noopener noreferrer me'}
-              class="channel-card"
-            >
-              <div class="card-head">
-                <div class="channel-brand">
-                  <div class="brand-icon" aria-hidden="true">
-                    {c.icon === 'linkedin' && (
-                      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.6a1.65 1.65 0 0 0-1.66 1.66 1.66 1.66 0 0 0 1.66 1.65 1.66 1.66 0 0 0 1.66-1.65A1.66 1.66 0 0 0 7.83 6.6Z"/>
-                      </svg>
-                    )}
-                    {c.icon === 'github' && (
-                      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                        <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/>
-                      </svg>
-                    )}
-                    {c.icon === 'thm' && (
-                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                        <path d="m9 12 2 2 4-4"/>
-                      </svg>
-                    )}
-                    {c.icon === 'mail' && (
-                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                      </svg>
-                    )}
-                  </div>
-                  <div class="name-box">
-                    <span class="channel-name">{c.name}</span>
-                    <span class="channel-handle">{c.handle}</span>
-                  </div>
+      <!-- Right Column: 2x2 Verified Channels Grid -->
+      <div class="channels-grid">
+        {channels.map((c) => (
+          <a
+            href={c.href}
+            target={c.href.startsWith('mailto:') ? undefined : '_blank'}
+            rel={c.href.startsWith('mailto:') ? undefined : 'noopener noreferrer me'}
+            class="channel-card"
+          >
+            <div class="card-top">
+              <div class="brand-group">
+                <div class="brand-icon" aria-hidden="true">
+                  {c.icon === 'linkedin' && (
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.6a1.65 1.65 0 0 0-1.66 1.66 1.66 1.66 0 0 0 1.66 1.65 1.66 1.66 0 0 0 1.66-1.65A1.66 1.66 0 0 0 7.83 6.6Z"/>
+                    </svg>
+                  )}
+                  {c.icon === 'github' && (
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                      <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/>
+                    </svg>
+                  )}
+                  {c.icon === 'thm' && (
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                      <path d="m9 12 2 2 4-4"/>
+                    </svg>
+                  )}
+                  {c.icon === 'mail' && (
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                    </svg>
+                  )}
                 </div>
-                <div class="channel-arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                    <polyline points="7 7 17 7 17 17"></polyline>
-                  </svg>
+                <div class="name-box">
+                  <span class="channel-name">{c.name}</span>
+                  <span class="channel-handle">{c.handle}</span>
                 </div>
               </div>
-
-              <p class="channel-desc">{c.desc}</p>
-
-              <div class="card-footer">
-                <span class="channel-badge">{c.badge}</span>
+              <div class="channel-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
               </div>
-            </a>
-          ))}
-        </div>
+            </div>
+
+            <p class="channel-desc">{c.desc}</p>
+
+            <div class="card-bottom">
+              <span class="channel-badge">{c.badge}</span>
+            </div>
+          </a>
+        ))}
       </div>
     </div>
   </div>
@@ -157,23 +162,13 @@ const channels = [
     border-top: 1px solid var(--border-subtle);
   }
 
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: clamp(2rem, 4vw, 3rem);
-    align-items: start;
-  }
-
-  .contact-left {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
+  /* ── Full-Width Section Header ── */
   .section-header {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    max-width: 680px;
   }
 
   .eyebrow-chip {
@@ -189,26 +184,35 @@ const channels = [
     font-weight: 700;
   }
 
-  .contact-title {
-    font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.25rem);
+  .section-title {
+    font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.1rem);
     color: var(--text-primary);
   }
 
-  .contact-desc {
+  .section-sub {
     font-size: 0.9rem;
     color: var(--text-secondary);
-    line-height: 1.65;
+    line-height: 1.6;
   }
 
-  /* ── Status Card ── */
+  /* ── Symmetrical Workspace Grid ── */
+  .contact-workspace {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 1.25rem;
+    align-items: stretch;
+  }
+
+  /* ── Left Column: Status Card ── */
   .status-card {
     background-color: var(--bg-surface);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-sm);
-    padding: 1.25rem;
+    padding: 1.35rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    justify-content: space-between;
+    gap: 1.2rem;
     box-shadow: var(--shadow-sm);
   }
 
@@ -225,9 +229,6 @@ const channels = [
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.825rem;
-    font-weight: 600;
-    color: var(--text-primary);
   }
 
   .pulse-dot {
@@ -237,6 +238,7 @@ const channels = [
     background-color: var(--status-success);
     box-shadow: 0 0 0 0 rgba(143, 185, 150, 0.7);
     animation: pulse-ring 2s infinite;
+    flex-shrink: 0;
   }
   @keyframes pulse-ring {
     0% { box-shadow: 0 0 0 0 rgba(143, 185, 150, 0.7); }
@@ -244,7 +246,13 @@ const channels = [
     100% { box-shadow: 0 0 0 0 rgba(143, 185, 150, 0); }
   }
 
-  .status-tag {
+  .status-heading {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .status-badge {
     font-family: var(--font-mono);
     font-size: 0.68rem;
     color: var(--accent-sky);
@@ -252,35 +260,44 @@ const channels = [
     background-color: var(--bg-elevated);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-xs);
+    white-space: nowrap;
   }
 
-  .status-details {
+  .status-rows {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.65rem;
+    flex: 1;
   }
 
-  .status-row {
+  .meta-row {
     display: flex;
     align-items: baseline;
     gap: 0.75rem;
     font-size: 0.78rem;
   }
 
-  .status-label {
+  .row-label {
     font-family: var(--font-mono);
     font-size: 0.7rem;
     color: var(--text-muted);
-    min-width: 60px;
+    min-width: 85px;
+    flex-shrink: 0;
   }
 
-  .status-val {
+  .row-val {
     color: var(--text-secondary);
     line-height: 1.45;
   }
 
+  .font-mono {
+    font-family: var(--font-mono);
+    color: var(--accent-sky);
+    font-size: 0.75rem;
+  }
+
   .status-action {
-    padding-top: 0.5rem;
+    padding-top: 0.25rem;
   }
 
   .email-btn {
@@ -294,7 +311,7 @@ const channels = [
     font-size: 0.8rem;
   }
 
-  /* ── Right Column: Channels Grid ── */
+  /* ── Right Column: 2x2 Channels Grid ── */
   .channels-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -308,6 +325,7 @@ const channels = [
     padding: 1.15rem;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 0.65rem;
     text-decoration: none;
     color: inherit;
@@ -320,14 +338,14 @@ const channels = [
     box-shadow: var(--shadow-sm);
   }
 
-  .card-head {
+  .card-top {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 0.5rem;
   }
 
-  .channel-brand {
+  .brand-group {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -386,16 +404,16 @@ const channels = [
   }
 
   .channel-desc {
-    font-size: 0.78rem;
+    font-size: 0.77rem;
     color: var(--text-secondary);
     line-height: 1.45;
     flex: 1;
   }
 
-  .card-footer {
+  .card-bottom {
     display: flex;
     align-items: center;
-    padding-top: 0.35rem;
+    padding-top: 0.45rem;
     border-top: 1px solid var(--border-subtle);
   }
 
@@ -403,10 +421,15 @@ const channels = [
     font-family: var(--font-mono);
     font-size: 0.65rem;
     color: var(--accent-sky);
+    padding: 2px 6px;
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
   }
 
-  @media (max-width: 900px) {
-    .contact-grid {
+  /* ── Responsive ── */
+  @media (max-width: 960px) {
+    .contact-workspace {
       grid-template-columns: 1fr;
     }
   }
