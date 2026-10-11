@@ -7,7 +7,7 @@
     private ctx: AudioContext | null = null;
     public isEnabled: boolean = true;
     private masterGain: GainNode | null = null;
-    private readonly SYSTEM_VOLUME = 0.20; // 20% of system volume strictly
+    private readonly SYSTEM_VOLUME = 0.50; // 50% of system volume strictly
 
     constructor() {
       // Sound enabled by default as requested; persists mute preference if explicitly set to 'false'
@@ -37,7 +37,7 @@
       return this.ctx;
     }
 
-    // ── 1. Tactile Micro Mouse Click (Strict 20% system volume ceiling) ──
+    // ── 1. Tactile Micro Mouse Click (Strict 50% system volume ceiling) ──
     public playClick() {
       if (!this.isEnabled) return;
       const ctx = this.getContext();
@@ -62,7 +62,7 @@
       osc.stop(now + 0.025);
     }
 
-    // ── 2. Mechanical Typewriter Keystroke (Strict 20% system volume ceiling) ──
+    // ── 2. Mechanical Typewriter Keystroke (Strict 50% system volume ceiling) ──
     public playTypewriter(isSpecial: boolean = false) {
       if (!this.isEnabled) return;
       const ctx = this.getContext();
