@@ -50,30 +50,6 @@ const navLinks = [
 
     <!-- Right: Action CTA & Mobile Toggle -->
     <div class="actions-zone">
-      <!-- Sound FX Toggle Button -->
-      <button
-        class="sound-toggle-btn"
-        id="soundToggleBtn"
-        type="button"
-        aria-label="Toggle sound effects (M)"
-        aria-pressed="false"
-        title="Toggle Sound Effects (Typewriter & Clicks) · Shortcut: M"
-      >
-        <span class="sound-icon-wrap" aria-hidden="true">
-          <svg class="sound-icon-off" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <line x1="23" y1="9" x2="17" y2="15"></line>
-            <line x1="17" y1="9" x2="23" y2="15"></line>
-          </svg>
-          <svg class="sound-icon-on" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-          </svg>
-        </span>
-        <span class="sound-text">SFX: OFF</span>
-      </button>
-
       <a href="/#contact" class="btn-primary hire-btn">
         <span>Connect</span>
       </a>
@@ -173,6 +149,7 @@ const navLinks = [
     align-items: center;
     gap: 0.75rem;
     flex-shrink: 0;
+    white-space: nowrap;
   }
 
   .brand-link {
@@ -187,6 +164,7 @@ const navLinks = [
     border-radius: var(--radius-xs);
     border: 1px solid transparent;
     transition: all var(--transition-fast);
+    white-space: nowrap;
   }
   .brand-link:hover {
     color: var(--accent-sky);
@@ -207,6 +185,7 @@ const navLinks = [
     border-radius: var(--radius-xs);
     background-color: var(--bg-elevated);
     border: 1px solid var(--border-subtle);
+    white-space: nowrap;
   }
 
   .status-text {
@@ -215,19 +194,22 @@ const navLinks = [
     color: var(--accent-sage);
     letter-spacing: 0.04em;
     text-transform: lowercase;
+    white-space: nowrap;
   }
 
   /* ── Desktop Navigation ── */
   .desktop-nav {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
   }
 
   .nav-list {
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 0.35rem;
+    white-space: nowrap;
   }
 
   .nav-item {
@@ -239,6 +221,7 @@ const navLinks = [
     border-radius: var(--radius-xs);
     border: 1px solid transparent;
     transition: all var(--transition-fast);
+    white-space: nowrap;
   }
   .nav-item:hover {
     color: var(--text-primary);
@@ -256,6 +239,8 @@ const navLinks = [
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .hire-btn {
@@ -264,47 +249,7 @@ const navLinks = [
     letter-spacing: 0.05em;
     padding: 0.35rem 0.85rem;
     min-height: 32px;
-  }
-
-  .sound-toggle-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    background-color: var(--bg-elevated);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-xs);
-    padding: 0.35rem 0.65rem;
-    min-height: 32px;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-  }
-  .sound-toggle-btn:hover {
-    color: var(--text-primary);
-    border-color: var(--border-active);
-    background-color: var(--bg-hover);
-  }
-  .sound-toggle-btn.active {
-    color: var(--accent-sky);
-    border-color: var(--accent-sky);
-    background-color: var(--bg-hover);
-  }
-  .sound-icon-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .sound-icon-on {
-    display: none;
-  }
-  .sound-toggle-btn.active .sound-icon-off {
-    display: none;
-  }
-  .sound-toggle-btn.active .sound-icon-on {
-    display: block;
-    color: var(--status-success);
+    white-space: nowrap;
   }
 
   /* ── Mobile Hamburger Toggle ── */
@@ -462,15 +407,18 @@ const navLinks = [
   }
 
   /* ── Responsive Rules ── */
-  @media (max-width: 820px) {
+  @media (max-width: 980px) {
+    .status-badge {
+      display: none;
+    }
+  }
+
+  @media (max-width: 860px) {
     .desktop-nav {
       display: none;
     }
     .mobile-toggle {
       display: flex;
-    }
-    .status-badge {
-      display: none;
     }
   }
 
