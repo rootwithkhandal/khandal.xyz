@@ -3,6 +3,7 @@ import '../styles/tokens.css';
 import '../styles/dot-grid.css';
 import '../styles/global.css';
 import DotGrid from '../components/common/DotGrid.astro';
+import SoundManager from '../components/common/SoundManager.astro';
 
 interface Props {
   title?: string;
@@ -176,6 +177,7 @@ if (extraSchema) {
 </head>
 <body>
   <DotGrid />
+  <SoundManager />
   <slot />
 
   <script>

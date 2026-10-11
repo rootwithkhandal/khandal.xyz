@@ -1,0 +1,261 @@
+---
+---
+
+<script>
+  // ── Web Audio Synthesizer (0 KB external bandwidth, 100% Cloudflare Free Tier safe) ──
+  class CyberAudioEngine {
+    private ctx: AudioContext | null = null;
+    public isEnabled: boolean = false;
+    private ambientGain: GainNode | null = null;
+    private ambientOsc1: OscillatorNode | null = null;
+    private ambientOsc2: OscillatorNode | null = null;
+
+    constructor() {
+      // Restore previous user preference (default: off for polite UX)
+      const stored = localStorage.getItem('sfx_enabled');
+      this.isEnabled = stored === 'true';
+
+      this.initEventListeners();
+      this.syncUI();
+    }
+
+    private getContext(): AudioContext | null {
+      if (!this.ctx) {
+        const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        if (AudioCtx) {
+          this.ctx = new AudioCtx();
+        }
+      }
+      if (this.ctx && this.ctx.state === 'suspended') {
+        this.ctx.resume();
+      }
+      return this.ctx;
+    }
+
+    // ── 1. Tactile Micro Mouse Click ──
+    public playClick() {
+      if (!this.isEnabled) return;
+      const ctx = this.getContext();
+      if (!ctx) return;
+
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sine';
+      // Snap down pitch envelope
+      osc.frequency.setValueAtTime(1100 + Math.random() * 150, now);
+      osc.frequency.exponentialRampToValueAtTime(80, now + 0.018);
+
+      gain.gain.setValueAtTime(0.035, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.02);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.025);
+    }
+
+    // ── 2. Mechanical Typewriter Keystroke ──
+    public playTypewriter(isSpecial: boolean = false) {
+      if (!this.isEnabled) return;
+      const ctx = this.getContext();
+      if (!ctx) return;
+
+      const now = ctx.currentTime;
+
+      // Primary mechanical clack (randomized pitch so every key press sounds unique)
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const baseFreq = isSpecial ? 520 : 1250 + (Math.random() * 320 - 160);
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(baseFreq, now);
+      osc.frequency.exponentialRampToValueAtTime(140, now + (isSpecial ? 0.045 : 0.028));
+
+      gain.gain.setValueAtTime(isSpecial ? 0.055 : 0.038, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + (isSpecial ? 0.05 : 0.032));
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.055);
+
+      // Micro noise burst simulating mechanical platen impact
+      const bufferSize = Math.floor(ctx.sampleRate * 0.016);
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.35));
+      }
+
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.value = isSpecial ? 900 : 2200;
+
+      const noiseGain = ctx.createGain();
+      noiseGain.gain.setValueAtTime(0.03, now);
+      noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.018);
+
+      noise.connect(filter);
+      filter.connect(noiseGain);
+      noiseGain.connect(ctx.destination);
+
+      noise.start(now);
+      noise.stop(now + 0.022);
+    }
+
+    // ── 3. Subtle Cyber Server Room Ambient Drone (0 KB Bandwidth) ──
+    public startAmbientDrone() {
+      const ctx = this.getContext();
+      if (!ctx || this.ambientGain) return;
+
+      this.ambientGain = ctx.createGain();
+      this.ambientGain.gain.setValueAtTime(0.0001, ctx.currentTime);
+      this.ambientGain.gain.exponentialRampToValueAtTime(0.015, ctx.currentTime + 1.2);
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.value = 140;
+
+      this.ambientOsc1 = ctx.createOscillator();
+      this.ambientOsc1.type = 'sine';
+      this.ambientOsc1.frequency.value = 55; // 55Hz Low Sub A
+
+      this.ambientOsc2 = ctx.createOscillator();
+      this.ambientOsc2.type = 'sine';
+      this.ambientOsc2.frequency.value = 55.35; // 0.35Hz subtle phase beat
+
+      this.ambientOsc1.connect(filter);
+      this.ambientOsc2.connect(filter);
+      filter.connect(this.ambientGain);
+      this.ambientGain.connect(ctx.destination);
+
+      this.ambientOsc1.start();
+      this.ambientOsc2.start();
+    }
+
+    public stopAmbientDrone() {
+      if (this.ambientGain && this.ctx) {
+        this.ambientGain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.4);
+        setTimeout(() => {
+          try {
+            this.ambientOsc1?.stop();
+            this.ambientOsc2?.stop();
+            this.ambientOsc1?.disconnect();
+            this.ambientOsc2?.disconnect();
+          } catch {
+            // Already stopped
+          }
+          this.ambientOsc1 = null;
+          this.ambientOsc2 = null;
+          this.ambientGain = null;
+        }, 500);
+      }
+    }
+
+    // ── Toggle Sound On/Off ──
+    public toggle() {
+      this.isEnabled = !this.isEnabled;
+      localStorage.setItem('sfx_enabled', this.isEnabled ? 'true' : 'false');
+
+      if (this.isEnabled) {
+        this.getContext();
+        this.playClick();
+        this.startAmbientDrone();
+      } else {
+        this.stopAmbientDrone();
+      }
+
+      this.syncUI();
+    }
+
+    private syncUI() {
+      const btns = document.querySelectorAll<HTMLButtonElement>('.sound-toggle-btn');
+      btns.forEach(btn => {
+        const textEl = btn.querySelector('.sound-text');
+        if (this.isEnabled) {
+          btn.classList.add('active');
+          btn.setAttribute('aria-pressed', 'true');
+          btn.setAttribute('title', 'Sound Effects: ON (Typewriter & Clicks) · Press M to mute');
+          if (textEl) textEl.textContent = 'SFX: ON';
+        } else {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-pressed', 'false');
+          btn.setAttribute('title', 'Sound Effects: OFF · Press M to enable');
+          if (textEl) textEl.textContent = 'SFX: OFF';
+        }
+      });
+    }
+
+    private initEventListeners() {
+      // 1. Mouse Click Listener
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement | null;
+        if (!target) return;
+
+        // Skip the toggle button itself to avoid double-clicking
+        if (target.closest('.sound-toggle-btn')) return;
+
+        // Detect clickable elements
+        const clickable = target.closest('a, button, summary, input[type="button"], input[type="submit"], [role="button"], [role="tab"]');
+        if (clickable) {
+          this.playClick();
+        }
+      }, { passive: true });
+
+      // 2. Keyboard Typewriter Listener
+      document.addEventListener('keydown', (e) => {
+        const activeTag = document.activeElement?.tagName?.toLowerCase();
+        const isInputField = activeTag === 'input' || activeTag === 'textarea';
+
+        // Keyboard Shortcut 'M' toggles sound when not typing inside an input
+        if ((e.key === 'm' || e.key === 'M') && !isInputField && !e.ctrlKey && !e.metaKey && !e.altKey) {
+          e.preventDefault();
+          this.toggle();
+          return;
+        }
+
+        // If sound enabled, play typewriter sound on typing
+        if (!this.isEnabled) return;
+
+        // Special keys: Enter, Space, Backspace
+        const isSpecialKey = e.key === 'Enter' || e.key === 'Backspace' || e.key === ' ' || e.key === 'Tab';
+
+        // Ignored modifier keys
+        const isModifier = ['Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'Escape', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key);
+
+        if (!isModifier) {
+          this.playTypewriter(isSpecialKey);
+        }
+      }, { passive: false });
+
+      // 3. Audio toggle button clicks
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement | null;
+        if (target?.closest('.sound-toggle-btn')) {
+          this.toggle();
+        }
+      });
+
+      // Pause ambient when tab is hidden to conserve resources
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          this.stopAmbientDrone();
+        } else if (this.isEnabled) {
+          this.startAmbientDrone();
+        }
+      });
+    }
+  }
+
+  // Initialize once on DOM load
+  if (typeof window !== 'undefined') {
+    const audioEngine = new CyberAudioEngine();
+    (window as unknown as { __cyberAudio: CyberAudioEngine }).__cyberAudio = audioEngine;
+  }
+</script>
