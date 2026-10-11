@@ -17,7 +17,7 @@ Priyansh Khandal (handle: rootwithkhandal) is an MCA graduate student and EC-Cou
   - Ranked Blue Team Track - TryHackMe (2025)
 - **Primary Tooling:** Splunk Enterprise (SPL), Wazuh EDR, Elastic Security (EQL), Sysmon, Windows Event Logs (EVTX), Linux auditd, Volatility 3, Sigma CLI, YARA, Wireshark, Zeek, Python, PowerShell.
 - **Availability:** Immediate joiner (0-day notice), available for 24/7 rotational shifts (remote, hybrid, on-site).
-- **Direct Email:** khandakp04@gmail.com
+- **Direct Email:** ipriyansh@outlook.in
 - **Website:** https://khandal.tech
 
 ## Core Sections & Canonical Links
