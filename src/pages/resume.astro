@@ -1,0 +1,551 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+
+const candidate = {
+  name: "Priyansh Khandal",
+  title: "SOC Analyst & Detection Engineer",
+  credentials: "Certified SOC Analyst (EC-Council CSA) · MCA Candidate",
+  email: "ipriyansh@outlook.in",
+  location: "India (Open to Relocation · Remote · Hybrid)",
+  shifts: "24/7 Rotational Shifts · Weekend Ready · 0-Day Notice",
+  links: [
+    { label: "LinkedIn", url: "https://linkedin.com/in/priyanshkhandal" },
+    { label: "GitHub", url: "https://github.com/rootwithkhandal" },
+    { label: "TryHackMe", url: "https://tryhackme.com/p/rootwithkhandal" },
+    { label: "Portfolio", url: "https://khandal.tech" }
+  ]
+};
+
+const certs = [
+  { name: "Certified SOC Analyst (CSA)", issuer: "EC-Council", year: "2026", id: "CSA" },
+  { name: "IBM Cybersecurity Analyst Professional Certificate", issuer: "IBM / Coursera", year: "2025", id: "IBM" },
+  { name: "Google Cybersecurity Professional Certificate", issuer: "Google Career Certificates", year: "2025", id: "Google" },
+  { name: "SOC Level 1 Track & Top Ranked Blue Team", issuer: "TryHackMe", year: "2025", id: "THM" }
+];
+
+const skills = [
+  { category: "SIEM & Telemetry", items: ["Splunk Enterprise", "Elastic Security", "Wazuh EDR", "Sysmon (EID 1, 3, 10, 22)", "Windows Security Event Logs", "Linux auditd"] },
+  { category: "Detection & Hunting", items: ["Sigma Rules", "YARA", "MITRE ATT&CK Mapping", "Splunk SPL", "Elastic Query DSL", "Atomic Red Team"] },
+  { category: "Digital Forensics & IR", items: ["Volatility 3 (Memory Analysis)", "KAPE", "Wireshark", "Zeek (Network Security)", "Process Hollowing Triage", "Timeline Reconstruction"] },
+  { category: "Automation & Scripting", items: ["Python 3", "PowerShell", "Bash", "VirusTotal v3 API", "AbuseIPDB API", "Shodan REST API", "Git / GitHub Actions"] }
+];
+
+const experiences = [
+  {
+    role: "SOC Analyst & Blue Team Researcher",
+    org: "Independent Security Lab & Blue Team Projects",
+    period: "2024 – Present",
+    bullets: [
+      "Built an enterprise virtualized SOC lab on Proxmox VE with multi-VLAN segmentation, Wazuh Manager, and active Sysmon log ingestion across Windows domain endpoints.",
+      "Engineered automated alert enrichment pipeline integrating VirusTotal and AbuseIPDB APIs, cutting repetitive false positive alert noise by 60% and reducing mean triage time to under 4 minutes.",
+      "Authored and validated 20+ vendor-agnostic Sigma detection rules targeting LOLBins, encoded PowerShell cradles, and process hollowing, compiled to Splunk SPL.",
+      "Investigated raw host memory dumps using Volatility 3 (malfind, pstree, vadinfo) to detect reflective DLL injections and carve payload binaries."
+    ]
+  }
+];
+
+const education = [
+  {
+    degree: "Master of Computer Applications (MCA)",
+    institution: "Active University Graduate Student",
+    period: "2024 – Present",
+    details: "Core focus: Advanced operating systems, distributed network security, cryptography, and enterprise computing systems."
+  }
+];
+---
+
+<Layout
+  title="Priyansh Khandal · Resume & SOC Analyst Qualifications"
+  description="Verified resume and qualifications for Priyansh Khandal: Certified SOC Analyst (CSA) and MCA candidate specializing in SIEM telemetry, Sigma detection engineering, and incident response."
+>
+  <Header currentPath="/resume" />
+
+  <main class="resume-page site-container">
+    <!-- Top Action Bar (Hidden when printing) -->
+    <div class="resume-actions-bar no-print">
+      <div class="actions-left">
+        <a href="/" class="btn-ghost back-btn">
+          <span>&lt; Back to Portfolio</span>
+        </a>
+      </div>
+      <div class="actions-right">
+        <button type="button" class="btn-secondary print-btn" id="printResumeBtn">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+          <span>Print / Save as PDF</span>
+        </button>
+        <a href="mailto:ipriyansh@outlook.in?subject=Interview%20Invitation%20%E2%80%94%20SOC%20Analyst%20Role" class="btn-primary hire-action-btn">
+          <span>Contact for Interview</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Printable Resume Sheet Card -->
+    <article class="resume-sheet" id="resumeSheet">
+      <!-- Header -->
+      <header class="sheet-header">
+        <div class="header-main">
+          <h1 class="candidate-name">{candidate.name}</h1>
+          <p class="candidate-role">{candidate.title}</p>
+          <p class="candidate-sub">{candidate.credentials}</p>
+        </div>
+
+        <div class="header-meta">
+          <div class="meta-item">
+            <span class="meta-label">Email:</span>
+            <a href={`mailto:${candidate.email}`} class="meta-val font-mono">{candidate.email}</a>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Location:</span>
+            <span class="meta-val">{candidate.location}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Availability:</span>
+            <span class="meta-val highlight">{candidate.shifts}</span>
+          </div>
+          <div class="meta-item links-row">
+            {candidate.links.map(link => (
+              <a href={link.url} target="_blank" rel="noopener noreferrer" class="meta-link font-mono">
+                {link.label} ↗
+              </a>
+            ))}
+          </div>
+        </div>
+      </header>
+
+      <!-- Professional Summary -->
+      <section class="sheet-section">
+        <h2 class="section-heading">Professional Summary</h2>
+        <p class="summary-text">
+          Certified SOC Analyst (EC-Council CSA) and MCA graduate student dedicated to blue team defense, SIEM telemetry correlation, and detection engineering. Hands-on experience developing false-positive reduction pipelines, authoring production-grade Sigma rules, investigating in-memory process hollowing with Volatility 3, and configuring enterprise Wazuh/Sysmon monitoring. Immediately available for 24/7 rotational L1/L2 SOC Analyst roles.
+        </p>
+      </section>
+
+      <!-- Certifications -->
+      <section class="sheet-section">
+        <h2 class="section-heading">Certifications &amp; Accreditations</h2>
+        <div class="resume-certs-grid">
+          {certs.map(c => (
+            <div class="resume-cert-item">
+              <div class="cert-item-top">
+                <strong class="cert-item-name">{c.name}</strong>
+                <span class="cert-item-year font-mono">{c.year}</span>
+              </div>
+              <span class="cert-item-issuer">{c.issuer}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Technical Toolkit -->
+      <section class="sheet-section">
+        <h2 class="section-heading">Technical Skills &amp; Stack</h2>
+        <div class="skills-rows">
+          {skills.map(s => (
+            <div class="skills-row">
+              <span class="skill-category-label">{s.category}:</span>
+              <div class="skill-pills">
+                {s.items.map(item => (
+                  <span class="skill-pill font-mono">{item}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Practical Labs & Operations -->
+      <section class="sheet-section">
+        <h2 class="section-heading">Hands-on SOC Experience &amp; Labs</h2>
+        {experiences.map(exp => (
+          <div class="exp-block">
+            <div class="exp-header">
+              <div>
+                <h3 class="exp-role">{exp.role}</h3>
+                <span class="exp-org">{exp.org}</span>
+              </div>
+              <span class="exp-period font-mono">{exp.period}</span>
+            </div>
+            <ul class="exp-bullets">
+              {exp.bullets.map(b => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+
+      <!-- Education -->
+      <section class="sheet-section">
+        <h2 class="section-heading">Education</h2>
+        {education.map(edu => (
+          <div class="exp-block">
+            <div class="exp-header">
+              <div>
+                <h3 class="exp-role">{edu.degree}</h3>
+                <span class="exp-org">{edu.institution}</span>
+              </div>
+              <span class="exp-period font-mono">{edu.period}</span>
+            </div>
+            <p class="edu-details">{edu.details}</p>
+          </div>
+        ))}
+      </section>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .resume-page {
+    padding-top: clamp(2rem, 4vw, 3rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  /* ── Action Bar ── */
+  .resume-actions-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+    flex-wrap: wrap;
+  }
+
+  .actions-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .back-btn, .print-btn, .hire-action-btn {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    padding: 0.45rem 0.95rem;
+    min-height: 36px;
+  }
+
+  .print-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+
+  /* ── Resume Sheet (Container) ── */
+  .resume-sheet {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    padding: clamp(1.75rem, 4vw, 3.5rem);
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  /* ── Sheet Header ── */
+  .sheet-header {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 2rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 2px solid var(--border-subtle);
+  }
+
+  .candidate-name {
+    font-size: clamp(1.8rem, 1.4rem + 1.5vw, 2.5rem);
+    color: var(--text-primary);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.35rem;
+  }
+
+  .candidate-role {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--accent-sky);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .candidate-sub {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .header-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    font-size: 0.82rem;
+  }
+
+  .meta-item {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .meta-label {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    min-width: 78px;
+  }
+
+  .meta-val {
+    color: var(--text-secondary);
+  }
+
+  .meta-val.highlight {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .links-row {
+    margin-top: 0.25rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .meta-link {
+    color: var(--accent-sky);
+    font-size: 0.75rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .meta-link:hover {
+    color: var(--accent-hover);
+  }
+
+  /* ── Section Blocks ── */
+  .sheet-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .section-heading {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-sky);
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 0.35rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .summary-text {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  /* ── Certifications Grid ── */
+  .resume-certs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem 1.5rem;
+  }
+
+  .resume-cert-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.65rem 0.85rem;
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+  }
+
+  .cert-item-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .cert-item-name {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+  }
+
+  .cert-item-year {
+    font-size: 0.72rem;
+    color: var(--accent-sky);
+  }
+
+  .cert-item-issuer {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  /* ── Skills Rows ── */
+  .skills-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .skills-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+  }
+
+  .skill-category-label {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    min-width: 160px;
+    flex-shrink: 0;
+  }
+
+  .skill-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.5rem;
+  }
+
+  .skill-pill {
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    padding: 2px 7px;
+    border-radius: var(--radius-xs);
+  }
+
+  /* ── Experience & Education Blocks ── */
+  .exp-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .exp-role {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .exp-org {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  .exp-period {
+    font-size: 0.75rem;
+    color: var(--accent-sky);
+  }
+
+  .exp-bullets {
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .edu-details {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ── Mobile Layout ── */
+  @media (max-width: 768px) {
+    .sheet-header {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    .resume-certs-grid {
+      grid-template-columns: 1fr;
+    }
+    .skills-row {
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .skill-category-label {
+      min-width: auto;
+    }
+  }
+
+  /* ── Print Stylesheet (Pure ATS Black & White) ── */
+  @media print {
+    :global(body) {
+      background: #FFFFFF !important;
+      color: #111111 !important;
+    }
+    :global(.site-header),
+    :global(.site-footer),
+    :global(.dot-grid-canvas-layer),
+    .no-print {
+      display: none !important;
+    }
+    .resume-page {
+      padding: 0 !important;
+      max-width: 100% !important;
+    }
+    .resume-sheet {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      gap: 1.25rem !important;
+    }
+    .candidate-name, .exp-role, .cert-item-name {
+      color: #000000 !important;
+    }
+    .candidate-role, .section-heading, .cert-item-year, .exp-period {
+      color: #1a4d7c !important;
+      font-weight: 700 !important;
+    }
+    .summary-text, .exp-bullets, .meta-val, .edu-details, .skill-pill {
+      color: #222222 !important;
+    }
+    .resume-cert-item, .skill-pill {
+      background: #f7f7f7 !important;
+      border-color: #dddddd !important;
+    }
+    .sheet-header {
+      border-bottom-color: #333333 !important;
+    }
+    .section-heading {
+      border-bottom-color: #666666 !important;
+    }
+  }
+</style>
+
+<script>
+  const printBtn = document.getElementById('printResumeBtn');
+  printBtn?.addEventListener('click', () => {
+    window.print();
+  });
+</script>

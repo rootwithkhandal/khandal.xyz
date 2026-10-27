@@ -24,8 +24,11 @@ import HeroTerminal from './home/HeroTerminal.astro';
           <a href="/#contact" class="btn-primary hero-cta">
             <span>Connect for Roles</span>
           </a>
-          <a href="/projects" class="btn-secondary hero-secondary">
-            <span>View SOC Labs</span>
+          <a href="/resume" class="btn-secondary hero-resume">
+            <span>View Resume (CV) ↗</span>
+          </a>
+          <a href="/projects" class="btn-ghost hero-secondary">
+            <span>SOC Labs →</span>
           </a>
         </div>
 
@@ -49,6 +52,26 @@ import HeroTerminal from './home/HeroTerminal.astro';
       <!-- Right: Real Interactive Developer Terminal -->
       <div class="hero-terminal-wrap reveal d3">
         <HeroTerminal />
+      </div>
+    </div>
+
+    <!-- Recruiter Proof & Impact Metrics Strip -->
+    <div class="hero-impact-strip reveal d5">
+      <div class="impact-cell">
+        <span class="impact-num">60%</span>
+        <span class="impact-label">Alert Noise Reduction</span>
+      </div>
+      <div class="impact-cell">
+        <span class="impact-num">&lt; 4 min</span>
+        <span class="impact-label">Mean Triage Velocity</span>
+      </div>
+      <div class="impact-cell">
+        <span class="impact-num">Top 1%</span>
+        <span class="impact-label">TryHackMe Defense</span>
+      </div>
+      <div class="impact-cell">
+        <span class="impact-num">0-Day</span>
+        <span class="impact-label">Immediate Joining Ready</span>
       </div>
     </div>
   </div>
@@ -120,10 +143,59 @@ import HeroTerminal from './home/HeroTerminal.astro';
     padding: 0.6rem 1.15rem;
   }
 
-  .hero-secondary {
+  .hero-resume, .hero-secondary {
     font-family: var(--font-mono);
     font-size: 0.82rem;
     padding: 0.6rem 1.15rem;
+  }
+
+  /* ── Recruiter Impact Strip ── */
+  .hero-impact-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: clamp(2rem, 3.5vw, 3rem);
+    padding: 1.25rem 1.5rem;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+  }
+
+  .impact-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-left: 0.75rem;
+    border-left: 1px solid var(--border-subtle);
+  }
+  .impact-cell:first-child {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .impact-num {
+    font-family: var(--font-mono);
+    font-size: clamp(1.2rem, 1rem + 0.8vw, 1.6rem);
+    font-weight: 700;
+    color: var(--accent-sky);
+    line-height: 1.1;
+  }
+
+  .impact-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  @media (max-width: 720px) {
+    .hero-impact-strip {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem 1rem;
+    }
+    .impact-cell:nth-child(2n+1) {
+      padding-left: 0;
+      border-left: none;
+    }
   }
 
   /* Credential Strip — horizontal chip row replacing old metric grid */
