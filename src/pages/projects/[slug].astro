@@ -14,8 +14,10 @@ const { slug } = Astro.params;
 const project = projects.find(p => p.slug === slug)!;
 
 const raw = mdFiles[`../../data/projects/${slug}.md`];
-const repoName = project.githubRepo.split('/')[1] ?? slug;
-const githubUrl = `https://github.com/rootwithkhandal/${repoName}`;
+const repoParts = project.githubRepo.split('/');
+const repoOwner = repoParts[0] || 'rootwithkhandal';
+const repoName = repoParts[1] ?? slug;
+const githubUrl = `https://github.com/${project.githubRepo}`;
 
 const htmlContent = raw
   ? await marked.parse(raw)
@@ -36,7 +38,7 @@ const projectSchema = {
   title={project.title}
   tag={project.tag}
   tagColor={project.tagColor}
-  meta={`GitHub · rootwithkhandal / ${repoName}`}
+  meta={`GitHub · ${repoOwner} / ${repoName}`}
   backHref="/projects"
   backLabel="Projects"
   externalUrl={githubUrl}

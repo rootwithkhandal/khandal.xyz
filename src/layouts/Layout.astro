@@ -9,7 +9,7 @@ interface Props {
   title?: string;
   description?: string;
   canonical?: string;
-  extraSchema?: object | object[];
+  extraSchema?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const siteUrl = 'https://khandal.tech';
@@ -109,7 +109,7 @@ const websiteSchema = {
   "inLanguage": "en-US"
 };
 
-const schemas = [personSchema, profilePageSchema, websiteSchema];
+const schemas: Record<string, unknown>[] = [personSchema, profilePageSchema, websiteSchema];
 if (extraSchema) {
   if (Array.isArray(extraSchema)) {
     schemas.push(...extraSchema);

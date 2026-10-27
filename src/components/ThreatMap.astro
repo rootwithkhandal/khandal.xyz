@@ -832,10 +832,6 @@
       const arc = activeArcs[i];
       arc.progress += arc.speed;
 
-      // Calculate 3D points along great circle arc with parabolic height
-      const pSrc = project(arc.source.lat, arc.source.lon, radius, cx, cy, rotY);
-      const pTgt = project(arc.target.lat, arc.target.lon, radius, cx, cy, rotY);
-
       // Interpolate lat/lon
       const currentLat = arc.source.lat + (arc.target.lat - arc.source.lat) * arc.progress;
       const currentLon = arc.source.lon + (arc.target.lon - arc.source.lon) * arc.progress;
@@ -961,13 +957,23 @@
   });
 
   // ── Periodic Attack Generator & EPS Fluctuation ──
-  let attackInterval: number;
-  let epsInterval: number;
+  let attackInterval: number | undefined;
+  let epsInterval: number | undefined;
+
+  function stopTelemetry() {
+    if (attackInterval) window.clearInterval(attackInterval);
+    if (epsInterval) window.clearInterval(epsInterval);
+    attackInterval = undefined;
+    epsInterval = undefined;
+  }
 
   function startTelemetry() {
-    // Initial batch of attacks
-    for (let i = 0; i < 4; i++) {
-      spawnAttack();
+    stopTelemetry();
+
+    if (activeArcs.length < 2) {
+      for (let i = 0; i < 3; i++) {
+        spawnAttack();
+      }
     }
 
     attackInterval = window.setInterval(() => {
@@ -1004,8 +1010,10 @@
       if (entry.isIntersecting) {
         cancelAnimationFrame(animFrameId);
         animFrameId = requestAnimationFrame(render);
+        startTelemetry();
       } else {
         cancelAnimationFrame(animFrameId);
+        stopTelemetry();
       }
     });
   }, { threshold: 0.1 });
@@ -1013,8 +1021,6 @@
   if (canvas) {
     initCanvas();
     observer.observe(canvas);
-    startTelemetry();
-    animFrameId = requestAnimationFrame(render);
   }
 
   window.addEventListener('resize', () => {

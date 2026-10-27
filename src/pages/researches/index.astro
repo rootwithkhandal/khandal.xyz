@@ -4,7 +4,7 @@ import Header from '../../components/common/Header.astro';
 import Footer from '../../components/common/Footer.astro';
 import { researches as allResearches } from '../../data/researches';
 
-const researches = allResearches.sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
+const researches = [...allResearches].sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
 const tags = ['All', ...new Set(researches.map(b => b.tag))];
 ---
 
@@ -24,7 +24,7 @@ const tags = ['All', ...new Set(researches.map(b => b.tag))];
         </div>
         <h1 class="page-title">Technical Field Notes &amp; Disclosures</h1>
         <p class="page-sub">
-          {researches.length} published research articles covering vulnerability analysis, AI model security, and binary forensics.
+          {researches.length} published technical articles covering SIEM triage, memory forensics, Sigma detection engineering, and SOC lab defense.
         </p>
       </div>
 

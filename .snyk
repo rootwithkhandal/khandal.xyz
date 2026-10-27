@@ -1,0 +1,25 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.7
+# Ignores vulnerabilities until expiry date; change duration by modifying expiry date.
+#
+# The three advisories below have NO upstream fix available — each affects the
+# latest released version of its package (http-cache-semantics 4.3.0 is the
+# newest version that exists; SNYK-JS-PICOMATCH-21248802 affects both 2.3.2 and
+# the latest 4.x). All three are build-time dependencies of Astro (used during
+# the static-site build for HTTP caching and glob matching) and are NOT present
+# in the static production output. They are ignored pending an upstream patch;
+# the 90-day expiry ensures they resurface for review.
+ignore:
+  SNYK-JS-HTTPCACHESEMANTICS-19964064:
+    - '*':
+        reason: No upstream fix available (advisory affects latest http-cache-semantics 4.3.0). Build-time dependency of Astro; not present in static production output.
+        expires: '2027-01-25T00:00:00.000Z'
+  SNYK-JS-HTTPCACHESEMANTICS-19964068:
+    - '*':
+        reason: No upstream fix available (advisory affects latest http-cache-semantics 4.3.0). Build-time dependency of Astro; not present in static production output.
+        expires: '2027-01-25T00:00:00.000Z'
+  SNYK-JS-PICOMATCH-21248802:
+    - '*':
+        reason: No upstream fix available (advisory affects latest picomatch 2.3.2 and 4.0.7). Build-time dependency via unstorage/anymatch; not present in static production output.
+        expires: '2027-01-25T00:00:00.000Z'
+patch: {}

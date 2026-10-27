@@ -50,6 +50,16 @@ const navLinks = [
 
     <!-- Right: Action CTA & Mobile Toggle -->
     <div class="actions-zone">
+      <button
+        class="sound-toggle-btn"
+        type="button"
+        aria-label="Toggle audio effects (shortcut: M)"
+        title="Toggle audio effects (Shortcut: M)"
+      >
+        <span class="sound-icon" aria-hidden="true">🔇</span>
+        <span class="sound-label">SFX: OFF</span>
+      </button>
+
       <a href="/#contact" class="btn-primary hire-btn">
         <span>Connect</span>
       </a>
@@ -243,6 +253,30 @@ const navLinks = [
     flex-shrink: 0;
   }
 
+  .sound-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    padding: 0.35rem 0.65rem;
+    min-height: 32px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+  .sound-toggle-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--border-active);
+    background-color: var(--bg-hover);
+  }
+  .sound-toggle-btn.muted {
+    opacity: 0.65;
+  }
+
   .hire-btn {
     font-family: var(--font-mono);
     font-size: 0.8rem;
@@ -428,6 +462,12 @@ const navLinks = [
     }
     .hire-btn {
       display: none;
+    }
+    .sound-toggle-btn .sound-label {
+      display: none;
+    }
+    .sound-toggle-btn {
+      padding: 0.35rem 0.5rem;
     }
   }
 </style>

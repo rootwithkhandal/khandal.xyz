@@ -10,11 +10,33 @@
     private readonly SYSTEM_VOLUME = 0.50; // 50% of system volume strictly
 
     constructor() {
-      // Sound enabled by default as requested; persists mute preference if explicitly set to 'false'
+      // Default to muted (opt-in) so visitors aren't startled; persists in localStorage
       const stored = localStorage.getItem('sfx_v2');
-      this.isEnabled = stored === null ? true : stored === 'true';
+      this.isEnabled = stored === 'true';
 
       this.initEventListeners();
+      this.updateButtons();
+    }
+
+    public updateButtons() {
+      const btns = document.querySelectorAll<HTMLElement>('.sound-toggle-btn');
+      btns.forEach(btn => {
+        const icon = btn.querySelector('.sound-icon');
+        const label = btn.querySelector('.sound-label');
+        if (this.isEnabled) {
+          btn.classList.remove('muted');
+          btn.setAttribute('aria-pressed', 'true');
+          btn.setAttribute('aria-label', 'Mute audio effects (Shortcut: M)');
+          if (icon) icon.textContent = '🔊';
+          if (label) label.textContent = 'SFX: ON';
+        } else {
+          btn.classList.add('muted');
+          btn.setAttribute('aria-pressed', 'false');
+          btn.setAttribute('aria-label', 'Enable audio effects (Shortcut: M)');
+          if (icon) icon.textContent = '🔇';
+          if (label) label.textContent = 'SFX: OFF';
+        }
+      });
     }
 
     private getContext(): AudioContext | null {
@@ -119,6 +141,7 @@
       this.isEnabled = !this.isEnabled;
       localStorage.setItem('sfx_v2', this.isEnabled ? 'true' : 'false');
       localStorage.setItem('sfx_enabled', this.isEnabled ? 'true' : 'false');
+      this.updateButtons();
 
       if (this.isEnabled) {
         this.playClick();
