@@ -7,10 +7,9 @@ const { currentPath = Astro.url.pathname } = Astro.props;
 
 const navLinks = [
   { href: '/#profile', label: 'About' },
-  { href: '/projects', label: 'SOC Labs & Tools' },
+  { href: '/projects', label: 'Projects' },
   { href: '/researches', label: 'Researches' },
   { href: '/resume', label: 'Resume' },
-  { href: '/security', label: 'Security' },
   { href: '/#contact', label: 'Contact' },
 ];
 ---
@@ -51,15 +50,6 @@ const navLinks = [
 
     <!-- Right: Action CTA & Mobile Toggle -->
     <div class="actions-zone">
-      <button
-        class="sound-toggle-btn"
-        type="button"
-        aria-label="Toggle audio effects (shortcut: M)"
-        title="Toggle audio effects (Shortcut: M)"
-      >
-        <span class="sound-icon" aria-hidden="true">🔇</span>
-        <span class="sound-label">SFX: OFF</span>
-      </button>
 
       <a href="/#contact" class="btn-primary hire-btn">
         <span>Connect</span>
